@@ -1,10 +1,10 @@
 ﻿=== translit it ===
-Contributors: ichi-nya
+Contributors: ichi-nya, Ichi
 Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
-Requires at least: 1.5
-Tested up to: 2.2.3
-Stable tag: 0.2
+Requires at least: 2.7
+Tested up to: 4.3.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Похож на плагины [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/) и [rus-to-lat](http://wordpress.org/extend/plugins/rustolat/).
 
 В отличие от оригинального плагина rus-to-lat, этот плагин может не только транслитерировать слаги постов и тегов, но переводит их с помощью переводчика (если тот недоступен - тогда работает транслитерация).
+
+ВНИМАНИЕ! Плагин не работает если активирован rus-to-lat.
 
 Converts Cyrillic characters in post slugs to Latin characters or translit. Very useful for Russian-speaking users of WordPress. You can use this plugin for creating human-readable links.
 
@@ -47,7 +49,7 @@ translit-it1.jpg
 
 == Upgrade Notice ==
 
-= 1.0 =
+= 0.3 =
 Стабильная версия.
   
 == ToDo ==
