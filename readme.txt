@@ -1,5 +1,5 @@
 ﻿=== translit it ===
-Contributors: ichi-nya, Ichi
+Contributors: Ichi-nya
 Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
 Requires at least: 2.7
