@@ -3,8 +3,8 @@ Contributors: Ichi-nya
 Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
 Requires at least: 2.7
-Tested up to: 4.3.1
-Stable tag: 0.3
+Tested up to: 4.5.2
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,10 +47,16 @@ translit-it1.jpg
 = 0.2 =
 * Небольшие изменения
 
-== Upgrade Notice ==
-
 = 0.3 =
 Стабильная версия.
+
+= 0.5 =
+Обновление API Яндекса
+
+== Upgrade Notice ==
+
+= 0.5 =
+Обновление API Яндекса
   
 == ToDo ==
 Планы на следующие версии:
