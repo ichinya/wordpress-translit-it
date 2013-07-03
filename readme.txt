@@ -1,4 +1,4 @@
-=== translit it ===
+=== translit-it ===
 Contributors: Ichi-nya
 Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
