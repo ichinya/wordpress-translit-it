@@ -66,4 +66,5 @@ translit-it1.jpg
 1. Вынести файл настроек отдельно.
 1. Подключить Google Translate.
 1. Изменить меню опций.
+1. Добавить перевод файлов
 <?php code(); // goes in backticks ?>
