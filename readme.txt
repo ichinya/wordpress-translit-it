@@ -4,7 +4,7 @@ Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
 Requires at least: 2.7
 Tested up to: 4.5.2
-Stable tag: 0.5
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
