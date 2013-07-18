@@ -20,7 +20,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ВНИМАНИЕ! Плагин не работает если активирован rus-to-lat.
 
-Converts Cyrillic characters in post slugs to Latin characters or translit. Very useful for Russian-speaking users of WordPress. You can use this plugin for creating human-readable links.
 
 == Installation ==
 
