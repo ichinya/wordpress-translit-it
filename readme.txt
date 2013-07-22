@@ -5,10 +5,8 @@ Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, r
 Requires at least: 2.7
 Tested up to: 4.5.2
 Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Используется для перевода ЧПУ с русского на английский язык.
+Is used to put the slugs from Russian into English.
 
 == Description ==
 
@@ -21,8 +19,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Installation ==
 
 1. Загрузите папку плагина в `/wp-content/plugins/`.
-2. Активируйте плагин в Wordpress.
-3. В параметрах [Параметры -> Транслитерируй это!] выбрать способ транситерации и других настроек.
+1. Активируйте плагин в Wordpress.
+1. В параметрах (Параметры -> Транслитерируй это!) выбрать способ транситерации и других настроек.
 
 
 == Frequently Asked Questions ==
