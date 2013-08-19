@@ -1,34 +1,75 @@
 === translit-it ===
-Contributors: Anton Skorobogatov, Andrey Serebryakov, SergeyBiryukov
-Tags: l10n, translations, transliteration, slugs, russian, rustolat
-Requires at least: 1.5
-Tested up to: 2.2.3
-Stable tag: 0.3
+Contributors: Ichi-nya
+Donate link: http://goo.gl/GieeJ
+Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
+Requires at least: 3.3
+Tested up to: 3.6
+Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Converts Cyrillic characters in post slugs to Latin characters.
+Is used to put the slugs from Russian into English.
 
 == Description ==
 
-**This plugin is available for reference only. Its functionality has been replaced and extended by [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/).**
+Переводит русские slugs (postname) на английский с помощью переводчика или транслитом.
 
-*The original author of this plugin is Anton Skorobogatov, who passed away prematurely in 2007. I decided to make it available for installation through the Plugin Browser/Installer. I take no credit for the creation of this plugin.*
+Похож на плагины [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/) и [rus-to-lat](http://wordpress.org/extend/plugins/rustolat/).
 
-Converts Cyrillic characters in post slugs to Latin characters. Very useful for Russian-speaking users of WordPress.
-You can use this plugin for creating human-readable links.
+В отличие от оригинального плагина rus-to-lat, этот плагин может не только транслитерировать слаги постов и тегов, но переводит их с помощью переводчика.
 
 == Installation ==
 
-1. Upload `rustolat` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Загрузите папку плагина в `/wp-content/plugins/`.
+1. Активируйте плагин в Wordpress.
+1. В параметрах [Параметры -> Транслитерируй это!] выбрать способ транситерации и других настроек.
+
+== Frequently asked questions ==
+
+= Когда появится Google Translate =
+Гугл сделал платным сервис перевода через API Google
+
+= Ошибки при работе =
+Плагин не работает если активирован rus-to-lat.
+
+== Screenshots ==
+
+1. 
+2. 
 
 == Changelog ==
 
-= 0.3 =
-* Added ISO 9-95 standard
+= 0.1 =
+* Создание плагина
 
 = 0.2 =
-* Added GOST 16876-71 standard
-* Added options page
+* Небольшие изменения
 
-= 0.1 =
-* Initial release
+= 0.3 =
+* Стабильная версия.
+
+= 0.5 =
+* Обновление API Яндекса
+* Исправлена ошибка с пропуском не транслитерируемых букв
+
+= 1.0 =
+* Оптимизация запросов к API Яндекса
+* Исправление ошибок
+
+= 1.1 =
+* Добавление нового способа обращение к Яндекс.Переводчику
+* Исправление ошибок
+
+== Upgrade notice ==
+
+* Добавление нового способа обращение к Яндекс.Переводчику
+* Исправление ошибок
+
+== ToDo ==
+Планы на следующие версии:
+
+1. Вынести файл настроек отдельно.
+1. Подключить Google Translate.
+1. Изменить меню опций.
+1. Добавить перевод файлов
+<?php code(); // goes in backticks ?>
