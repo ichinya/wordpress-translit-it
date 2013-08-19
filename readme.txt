@@ -2,14 +2,12 @@
 Contributors: Ichi-nya
 Donate link: http://goo.gl/GieeJ
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
-Requires at least: 3.5
+Requires at least: 2.6.1
 Tested up to: 3.6
-Stable tag: 1.2
+Stable tag: trunk
 
 Is used to put the slugs from Russian into English.
 
 == Description ==
 
 Переводит русские slugs (postname) на английский с помощью переводчика или транслитом.
-
-<?php code(); // goes in backticks ?>
