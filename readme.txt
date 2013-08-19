@@ -1,57 +1,36 @@
 === translit-it ===
-Contributors: Ichi-nya
-Donate link: http://goo.gl/GieeJ
-Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: Anton Skorobogatov, Andrey Serebryakov, SergeyBiryukov
+Tags: l10n, translations, transliteration, slugs, russian, rustolat
+Requires at least: 1.5
+Tested up to: 2.2.3
+Stable tag: 0.3
 
-Is used to put the slugs from Russian into English.
+Converts Cyrillic characters in post slugs to Latin characters.
 
 == Description ==
 
-Переводит русские slugs (postname) на английский с помощью переводчика или транслитом.
+**This plugin is available for reference only. Its functionality has been replaced and extended by [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/).**
 
-Похож на плагины [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/) и [rus-to-lat](http://wordpress.org/extend/plugins/rustolat/).
+*The original author of this plugin is Anton Skorobogatov, who passed away prematurely in 2007. I decided to make it available for installation through the Plugin Browser/Installer. I take no credit for the creation of this plugin.*
 
-В отличие от оригинального плагина rus-to-lat, этот плагин может не только транслитерировать слаги постов и тегов, но переводит их с помощью переводчика.
+Converts Cyrillic characters in post slugs to Latin characters. Very useful for Russian-speaking users of WordPress.
+You can use this plugin for creating human-readable links.
+
+Thanks to Alexander Shilyaev for the idea.
 
 == Installation ==
 
-1. Загрузите папку плагина в `/wp-content/plugins/`.
-2. Активируйте плагин в Wordpress.
-3. В параметрах [Параметры -> Транслитерируй это!] выбрать способ транситерации и других настроек.
-
-== Frequently asked questions ==
-
-= Когда появится Google Translate =
-Гугл сделал платным сервис перевода через API Google
-
-= Ошибки при работе =
-Плагин не работает если активирован rus-to-lat.
-
-== Screenshots ==
-
-1. 
-2. 
+1. Upload `rustolat` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Changelog ==
 
-= 1.1 =
-* Добавление нового способа обращение к Яндекс.Переводчику
-* Исправление ошибок
+= 0.3 =
+* Added ISO 9-95 standard
 
-== Upgrade notice ==
+= 0.2 =
+* Added GOST 16876-71 standard
+* Added options page
 
-* Исправление ошибок
-
-== ToDo ==
-
-Планы на следующие версии:
-
-1. Вынести файл настроек отдельно.
-1. Подключить Google Translate.
-1. Изменить меню опций.
-1. Добавить перевод файлов
+= 0.1 =
+* Initial release
