@@ -35,7 +35,6 @@ Is used to put the slugs from Russian into English.
 == Screenshots ==
 
 1. 
-2. 
 
 == Changelog ==
 
