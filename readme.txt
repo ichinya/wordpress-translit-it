@@ -12,8 +12,4 @@ Is used to put the slugs from Russian into English.
 
 Переводит русские slugs (postname) на английский с помощью переводчика или транслитом.
 
-Похож на плагины [Cyr-To-Lat](http://wordpress.org/extend/plugins/cyr2lat/) и [rus-to-lat](http://wordpress.org/extend/plugins/rustolat/).
-
-В отличие от оригинального плагина rus-to-lat, этот плагин может не только транслитерировать слаги постов и тегов, но переводит их с помощью переводчика.
-
 <?php code(); // goes in backticks ?>
