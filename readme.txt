@@ -1,12 +1,10 @@
 === translit-it ===
 Contributors: Ichi-nya
-Donate link: http://goo.gl/GieeJ
+Donate link: https://yasobe.ru/na/translit_it
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
-Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 1.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 2.7
+Tested up to: 5.0.2
+Stable tag: trunk
 
 Is used to put the slugs from Russian into English.
 
@@ -22,19 +20,22 @@ Is used to put the slugs from Russian into English.
 
 1. Загрузите папку плагина в `/wp-content/plugins/`.
 1. Активируйте плагин в Wordpress.
-1. В параметрах [Параметры -> Транслитерируй это!] выбрать способ транситерации и других настроек.
+1. В параметрах (Параметры -> Транслитерируй это!) выбрать способ транситерации и других настроек.
 
-== Frequently asked questions ==
+
+== Frequently Asked Questions ==
 
 = Когда появится Google Translate =
+
 Гугл сделал платным сервис перевода через API Google
 
 = Ошибки при работе =
+
 Плагин не работает если активирован rus-to-lat.
 
 == Screenshots ==
 
-1. 
+translit-it1.jpg
 
 == Changelog ==
 
@@ -59,11 +60,11 @@ Is used to put the slugs from Russian into English.
 * Добавление нового способа обращение к Яндекс.Переводчику
 * Исправление ошибок
 
-== Upgrade notice ==
+== Upgrade Notice ==
 
-* Добавление нового способа обращение к Яндекс.Переводчику
-* Исправление ошибок
-
+= 1.4b =
+* Добавлена поддержка Wordpress 5
+  
 == ToDo ==
 Планы на следующие версии:
 
