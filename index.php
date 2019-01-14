@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: translit it!
-Plugin URI: http://wordpress.org/extend/plugins/translit-it/
-Description: Осторожно, это БЕТА версия! Переводим или транслитерализируем адреса страниц. Используется для перевода ЧПУ с русского на английский язык.
-Version: 1.4b
-Author: Ichi-nya
-Author URI: http://profiles.wordpress.org/ichi-nya
-Plugin URI: http://ichiblog.ru/
-License: GPL2
-Copyright: 2013
-*/
+  Plugin Name: translit it!
+  Plugin URI: http://wordpress.org/extend/plugins/translit-it/
+  Description: Осторожно, это БЕТА версия! Переводим или транслитерализируем адреса страниц. Используется для перевода ЧПУ с русского на английский язык.
+  Version: 1.5b
+  Author: Ichi-nya
+  Author URI: http://profiles.wordpress.org/ichi-nya
+  Plugin URI: http://ichiblog.ru/
+  License: GPL2
+  Copyright: 2013
+ */
 
 
 $talk = array(
@@ -46,18 +46,15 @@ $try_translate = false;
  */
 
 function str2lower($inputString) {
-    $outputString = mb_strtolower($inputString, 'UTF-8');
-    return $outputString;
+    return mb_strtolower($inputString, 'UTF-8');
 }
 
 function try_transtlate($title) {
     global $try_translate, $talk;
     // Была попытка перевода
     $try_translate = true;
-    // Используем транслитерацию $iso
-    $title_low = str2lower($title);
-    $result = strtr($title_low, $talk);
-    return $result;
+    // Используем транслитерацию $talk
+    return strtr(str2lower($title), $talk);
 }
 
 function sanitize_title_with_translit($title) {
@@ -69,46 +66,11 @@ function sanitize_title_with_translit($title) {
             break;
         case 'iso': return strtr(str2lower($title), $iso);
             break;
-        case 'google': return google_sanitize_title($title);
-            break;
         case 'yandex': return yandex_sanitize_title($title);
-            break;
-        case 'yandex2': return yandex_sanitize_title2($title);
             break;
         default: return $title;
             break;
     }
-}
-
-function google_sanitize_title($title) {
-    global $talk, $try_translate;
-    /* $rtl_standard = get_option('rtl_standard');
-      $url = 'http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q='. urlencode($title) .'&langpair=ru%7Cen';
-      $translate = file_get_contents($url);
-      $json = json_decode($translate, true);
-      if (isset($_POST['rtl_standard'])) {$rtl_standard=true;};
-      if ($json['responseStatus'] != 200)
-      return $title;
-      elseif ($rtl_translate and not($try_translate))
-      {$try_translate = true; yandex_sanitize_title($title) ;}
-      else sanitize_title_with_translit_again($title);
-
-      $result = $json['responseData']['translatedText'];
-      $result = htmlspecialchars_decode($result);
-      $result = stripslashes($result);
-      $result = preg_replace("~\W~", '-', $result);
-      $result = preg_replace('~-+~', '-', $result);
-      $result = trim($result, '-');
-      $result = strtolower($result);
-     */
-    // Заглушка
-    if ($try_translate) {
-        $result = strtr(str2lower($title), $talk);
-    } else {
-        $try_translate = true;
-        yandex_sanitize_title($title);
-    }
-    return $result;
 }
 
 function yandex_sanitize_title($title) {
@@ -125,20 +87,20 @@ function yandex_sanitize_title($title) {
     $url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' .
             $ya_api_15 . '&lang=ru-en&text=' .
             urlencode($title);
-    // Индийская магия... Убираем лишние обращения к переводчику из-за ограничений
-    $title2 = get_the_title();
-        $translate = @file_get_contents($url);
-        // Если не получается зайти по адресу переводчика
-        $status = substr($http_response_header[0], 9, 3);
-
+    $translate = @file_get_contents($url);
+    // Если не получается зайти по адресу переводчика
+    $status = substr($http_response_header[0], 9, 3);
+    $rtl_translate = get_option('rtl_translate');
     // Если получить данные от переводчика Яндекса не получилось.
-    if ($status != 200) {
+    if ($status != 200 && $rtl_translate) {
         return try_transtlate($title);
+    } elseif ($status != 200) {
+        return $title;
     }
     $json = json_decode($translate, true);
     // Проверяем на ошибки получения ответа
     if ($json['code'] == !200) {
-
+        
     } else {
         // Выбираем результат перевода
         $result = $json['text']['0'];
@@ -147,28 +109,6 @@ function yandex_sanitize_title($title) {
         $result = strtr(str2lower($result), $talk);
     }
     return $result;
-}
-
-function yandex_sanitize_title2($title) {
-    // ЭКСПЕРЕМЕНТАЛЬНАЯ НАСТРОЙКА
-    // Перевод через Яндекс в обход API
-    global $talk, $try_translate, $iso;
-    $status = 200;
-    $url = 'https://translate.yandex.net/api/v1/tr.json/translate?lang=ru-en&text=' .
-            urlencode($title) . '&srv=tr-text';
-    $translate = @file_get_contents($url);
-    // Если не получается зайти по адресу переводчика
-    $status = substr($http_response_header[0], 9, 3);
-    // Проверяем статус обращения
-    if ($status != 200) {
-        return try_transtlate($title);
-    }
-    // преобразовыем json
-    $json = json_decode($translate, true);
-    // Удаляем ковычки
-    $text = $json['text'][0];
-    //$text = substr($text, 1, strlen($text) - 1);
-    return try_transtlate($text);
 }
 
 function rtl_options_page() {
@@ -198,21 +138,11 @@ function rtl_options_page() {
                 ?>
                 <!-- Choice of the method of transliteration -->
                 <select name="rtl_standard">
-                    <option value="google"<?php
-                    if ($rtl_standard == 'google') {
-                        echo(' selected="selected"');
-                    }
-                    ?>>Google Translate (non work!)</option>
                     <option value="yandex"<?php
                     if ($rtl_standard == 'yandex') {
                         echo(' selected="selected"');
                     }
                     ?>>Yandex Translate</option>
-                    <option value="yandex2"<?php
-                    if ($rtl_standard == 'yandex2') {
-                        echo(' selected="selected"');
-                    }
-                    ?>>Yandex Translate ЭКСПЕРЕМЕНТАЛЬНЫЙ (non work!)</option>
                     <option value="talk"<?php
                     if ($rtl_standard == 'talk') {
                         echo(' selected="selected"');
@@ -239,7 +169,7 @@ function rtl_options_page() {
                 <?php
                 if ($rtl_standard == 'google') {
                     echo 'Гугл не работает';
-                };
+                }
                 ?>
                 <?php
                 if ($rtl_standard == 'yandex') {
@@ -252,8 +182,8 @@ function rtl_options_page() {
                            value="<?php echo $ya_api_15; ?>" />
                     <br />
                     Получить api-ключ Яндекса можно <a href="http://api.yandex.ru/key/form.xml?service=trnsl" target=_blank>тут</a>
-                    <?
-                };
+                    <?php
+                }
                 ?>
                 <br />
                 <input type="submit" value="Изменить" />
@@ -271,4 +201,3 @@ function rtl_add_menu() {
 add_action('admin_menu', 'rtl_add_menu');
 
 add_action('sanitize_title', 'sanitize_title_with_translit', 0);
-?>
