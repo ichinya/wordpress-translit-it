@@ -1,9 +1,9 @@
 === translit-it ===
 Contributors: Ichi-nya
-Donate link: https://yasobe.ru/na/translit_it
+Donate link: https://sobe.ru/na/translit_it
 Tags: l10n, translations, transliteration, slugs, russian, rustolat, rustoeng, rus2eng
-Requires at least: 2.7
-Tested up to: 5.0.2
+Requires at least: 6.0
+Tested up to: 6.2
 Stable tag: trunk
 
 Is used to put the slugs from Russian into English.
@@ -35,7 +35,7 @@ Is used to put the slugs from Russian into English.
 
 == Screenshots ==
 
-translit-it1.jpg
+screenshot-1.png
 
 == Changelog ==
 
@@ -67,13 +67,15 @@ translit-it1.jpg
 = 1.5b =
 * Исправлены ошибки
 
+= 1.6 =
+* Переписан код
+* Добавлен Yandex Cloud
+
 == Upgrade Notice ==
 
-= 1.5b =
-* Добавлена поддержка Wordpress 5
-* Перестал работать перевод Яндекс Экспериментальный
-* Исправлены ошибки
-  
+= 1.6 =
+* Добавлен Yandex Cloud
+
 == ToDo ==
 Планы на следующие версии:
 
