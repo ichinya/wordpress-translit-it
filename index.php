@@ -150,13 +150,18 @@ function sanitize_title_with_translit($title)
     $rtl_standard = get_option('rtl_standard');
     TryTranslate::set_try_translate((bool)get_option('rtl_translate'));
 
-    return match ($rtl_standard) {
-        'talk' => strtr(str2lower($title), get_talk_array()),
-        'iso' => strtr(str2lower($title), get_iso_array()),
-        'yandex' => yandex_sanitize_title($title),
-        'cloud_yandex' => yandex_cloud_translate($title),
-        default => $title,
-    };
+    switch ($rtl_standard) {
+        case 'talk':
+            return strtr(str2lower($title), get_talk_array());
+        case 'iso':
+            return strtr(str2lower($title), get_iso_array());
+        case 'yandex':
+            return yandex_sanitize_title($title);
+        case 'cloud_yandex':
+            return yandex_cloud_translate($title);
+        default:
+            return $title;
+    }
 }
 
 function yandex_sanitize_title($title): string
@@ -223,8 +228,6 @@ function yandex_cloud_translate(string $title): string
     $response = @json_decode(curl_exec($curl), true);
 
     curl_close($curl);
-    file_put_contents('./log.txt', print_r($response, true), FILE_APPEND);
-    file_put_contents('./log.txt', print_r(json_encode($post), true), FILE_APPEND);
     $translate = $response['translations'][0]['text'] ?? $title;
     if (TryTranslate::is_try_translate()) {
         $translate = strtr(str2lower($translate), get_talk_array());
