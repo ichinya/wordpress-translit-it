@@ -5,7 +5,7 @@ Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 7.1
 Tested up to: 7.1.3
 Requires PHP: 8.4
-Stable tag: 1.8.3
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,8 @@ Local transliteration does not require an API key, does not send data to any ext
 The plugin does not run a bulk rewrite of existing permalinks. WordPress still handles slug cleanup and uniqueness. Explicitly changing or regenerating a slug can change its URL, as usual.
 
 Settings are available under Settings > Транслитерируй это!.
+
+The settings screen includes conversion-mode cards, a local slug example and a separate Yandex connection section. Saved API keys are never sent back to the page: leave the replacement field blank to keep your key, or explicitly select its deletion. Legacy options remain available in a collapsible section. The form also works without JavaScript.
 
 = Minimum requirements =
 
@@ -65,6 +67,12 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 
 == Changelog ==
 
+= 1.9.0 =
+* Redesign the settings screen with accessible mode cards, conditional Yandex settings, a local permalink example and a responsive layout.
+* Stop exposing saved API keys in HTML; support blank-field preservation, validated replacement and explicit deletion.
+* Keep legacy settings in a collapsible section and load screen assets only on the plugin settings page.
+* Include the settings template and runtime CSS/JavaScript in installation packages.
+
 = 1.8.3 =
 * Avoid repeated translation requests after a service failure within the same PHP request, while retaining successful cached responses.
 * Prevent recursive translation calls triggered by third-party HTTP hooks.
@@ -104,6 +112,9 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 * Added WordPress 5 support.
 
 == Upgrade Notice ==
+
+= 1.9.0 =
+New settings page. Existing options are retained. A blank API-key field now keeps the saved key; use the explicit deletion checkbox to remove it.
 
 = 1.8.3 =
 Reduces repeated waits when translation is unavailable and prevents nested translation calls. WordPress 7.1+ and PHP 8.4+ remain required.

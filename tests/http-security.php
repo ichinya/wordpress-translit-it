@@ -46,6 +46,18 @@ function nonce_test( $body ) {
     preg_match( '/name="_wpnonce" value="([^"]+)"/', $body, $match );
     return $match[1] ?? '';
 }
+function selected_mode_test( $body ) {
+    preg_match_all( '/<input\b[^>]*>/i', $body, $inputs );
+    foreach ( $inputs[0] as $input ) {
+        if ( strpos( $input, 'name="rtl_standard"' ) !== false && preg_match( '/\schecked(?:=|\s|>)/i', $input ) && preg_match( '/value="([^"]*)"/', $input, $match ) ) {
+            return $match[1];
+        }
+    }
+    return '';
+}
+function empty_key_test( $body ) {
+    return (bool) preg_match( '/<input\b(?=[^>]*id="ya_api_key")(?=[^>]*value="")[^>]*>/i', $body );
+}
 $page = '/wp-admin/options-general.php?page=translit-it/index.php';
 try {
     login_test( 'translit_test_admin' );
@@ -58,21 +70,51 @@ try {
     list( $status ) = request_test( '/wp-admin/options.php', $fields );
     check_test( 403 === $status, 'Settings POST without nonce is rejected' );
     list( , $html ) = request_test( $page );
-    check_test( strpos( $html, 'value="talk"  selected=' ) !== false, 'CSRF did not change stored mode' );
+    check_test( 'talk' === selected_mode_test( $html ), 'CSRF did not change stored mode' );
     $fields['_wpnonce'] = 'invalid-fixture-nonce';
     list( $status ) = request_test( '/wp-admin/options.php', $fields );
     check_test( 403 === $status, 'Invalid nonce is rejected' );
 
     list( , $html ) = request_test( $page, array( 'rtl_standard' => 'iso', 'ya_api_key' => 'legacy-attack' ) );
-    check_test( strpos( $html, 'value="talk"  selected=' ) !== false, 'Old vulnerable settings URL no longer saves POST data' );
+    check_test( 'talk' === selected_mode_test( $html ), 'Old vulnerable settings URL no longer saves POST data' );
 
     $fields['_wpnonce'] = $nonce;
     list( $status ) = request_test( '/wp-admin/options.php', $fields );
     check_test( 200 === $status, 'Valid administrator save completes' );
     list( , $html ) = request_test( $page );
-    check_test( strpos( $html, 'value="iso"  selected=' ) !== false, 'Valid save persists selected mode' );
+    check_test( 'iso' === selected_mode_test( $html ), 'Valid save persists selected mode' );
     check_test( strpos( $html, '<script>alert(1)</script>' ) === false && strpos( $html, '<img src=x' ) === false, 'Saved payloads do not execute as HTML' );
-    check_test( strpos( $html, 'name="ya_api_key" type="password" class="regular-text" autocomplete="new-password" value=""' ) !== false, 'Invalid key is rejected during real settings save' );
+    check_test( empty_key_test( $html ), 'API key field never reveals the stored value' );
+
+    $fields = array( 'option_page' => 'translit_it_settings', 'action' => 'update', '_wpnonce' => nonce_test( $html ), 'rtl_standard' => 'cloud_yandex', 'rtl_translate' => '1', 'ya_api_key' => array( 'value' => 'fixture-hidden-saved-key' ), 'folder_id' => '' );
+    list( $status ) = request_test( '/wp-admin/options.php', $fields );
+    check_test( 200 === $status, 'Structured API key save succeeds' );
+    list( , $html ) = request_test( $page );
+    check_test( 'cloud_yandex' === selected_mode_test( $html ), 'Yandex mode is saved' );
+    check_test( strpos( $html, 'data-key-configured="1"' ) !== false, 'Saved key status is shown' );
+    check_test( strpos( $html, 'fixture-hidden-saved-key' ) === false && empty_key_test( $html ), 'Saved secret never appears in response HTML' );
+    check_test( strpos( $html, '/translit-it/assets/admin.css' ) !== false && strpos( $html, '/translit-it/assets/admin.js' ) !== false, 'Settings screen loads its packaged assets' );
+    list( , $dashboard ) = request_test( '/wp-admin/index.php' );
+    check_test( strpos( $dashboard, '/translit-it/assets/admin.' ) === false, 'Settings assets are not loaded on other admin pages' );
+
+    $fields['_wpnonce'] = nonce_test( $html );
+    $fields['rtl_standard'] = 'talk';
+    $fields['ya_api_key'] = array( 'value' => '' );
+    list( $status ) = request_test( '/wp-admin/options.php', $fields );
+    list( , $html ) = request_test( $page );
+    check_test( 200 === $status && strpos( $html, 'data-key-configured="1"' ) !== false, 'Switching to local mode preserves the saved secret' );
+
+    $fields['_wpnonce'] = nonce_test( $html );
+    $fields['ya_api_key'] = array( 'value' => '<script>bad-key</script>' );
+    request_test( '/wp-admin/options.php', $fields );
+    list( , $html ) = request_test( $page );
+    check_test( strpos( $html, 'data-key-configured="1"' ) !== false && strpos( $html, '<script>bad-key</script>' ) === false, 'Invalid replacement keeps the old secret and escapes errors' );
+
+    $fields['_wpnonce'] = nonce_test( $html );
+    $fields['ya_api_key'] = array( 'clear' => '1', 'value' => '' );
+    request_test( '/wp-admin/options.php', $fields );
+    list( , $html ) = request_test( $page );
+    check_test( strpos( $html, 'data-key-configured="0"' ) !== false && strpos( $html, 'name="ya_api_key[clear]"' ) === false, 'Explicit key deletion succeeds' );
     $admin_nonce = nonce_test( $html );
     $fields = array( 'option_page' => 'translit_it_settings', 'action' => 'update', '_wpnonce' => $admin_nonce, 'rtl_standard' => 'talk', 'ya_api_key' => '', 'folder_id' => '' );
     list( $status ) = request_test( '/wp-admin/options.php', $fields );
@@ -88,7 +130,7 @@ try {
     check_test( 403 === $status, 'Subscriber cannot save settings with an administrator nonce' );
     login_test( 'translit_test_admin' );
     list( , $html ) = request_test( $page );
-    check_test( strpos( $html, 'value="talk"  selected=' ) !== false, 'Subscriber request did not change stored mode' );
+    check_test( 'talk' === selected_mode_test( $html ), 'Subscriber request did not change stored mode' );
     echo 'PASS: ' . $checks . ' authenticated HTTP security checks' . PHP_EOL;
 } finally {
     unlink( $cookie );

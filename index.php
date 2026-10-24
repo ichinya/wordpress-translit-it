@@ -3,7 +3,7 @@
  * Plugin Name: translit it!
  * Plugin URI: https://wordpress.org/plugins/translit-it/
  * Description: Transliterates Russian slugs or translates them into English with Yandex Translate.
- * Version: 1.8.3
+ * Version: 1.9.0
  * Requires at least: 7.1
  * Requires PHP: 8.4
  * Author: Ichi-nya
@@ -23,6 +23,11 @@ require_once __DIR__ . '/includes/transliteration.php';
 
 /** Slug conversion and the settings page. */
 final class Translit_It {
+	/** Asset version for the settings screen. */
+	private const VERSION = '1.9.0';
+
+	/** Hook returned by WordPress for this plugin's settings screen. */
+	private static string $settings_page = '';
 	/** Reuse responses within one request, without storing titles or API keys. */
 	private static array $translations = array();
 
@@ -37,13 +42,14 @@ final class Translit_It {
 		add_filter( 'sanitize_title', array( __CLASS__, 'filter_title' ), 0, 3 );
 		add_action( 'admin_menu', array( __CLASS__, 'add_menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_settings_assets' ) );
 	}
 
 	/** Register the original option names so existing settings survive upgrades. */
 	public static function register_settings() {
 		register_setting( 'translit_it_settings', 'rtl_standard', array( 'type' => 'string', 'sanitize_callback' => array( __CLASS__, 'sanitize_mode' ), 'default' => 'off' ) );
 		register_setting( 'translit_it_settings', 'rtl_translate', array( 'type' => 'boolean', 'sanitize_callback' => array( __CLASS__, 'sanitize_checkbox' ), 'default' => false ) );
-		register_setting( 'translit_it_settings', 'ya_api_key', array( 'type' => 'string', 'sanitize_callback' => array( __CLASS__, 'sanitize_key' ), 'default' => '' ) );
+		register_setting( 'translit_it_settings', 'ya_api_key', array( 'type' => 'string', 'sanitize_callback' => array( __CLASS__, 'sanitize_saved_key' ), 'default' => '' ) );
 		register_setting( 'translit_it_settings', 'folder_id', array( 'type' => 'string', 'sanitize_callback' => array( __CLASS__, 'sanitize_folder' ), 'default' => '' ) );
 	}
 
@@ -64,6 +70,28 @@ final class Translit_It {
 		}
 		$value = trim( $value );
 		return preg_match( '/\A[A-Za-z0-9_.:\-]*\z/', $value ) ? $value : '';
+	}
+
+	/** A blank UI field keeps a saved key; clearing it requires an explicit choice. */
+	public static function sanitize_saved_key( $value ) {
+		// Preserve ordinary Options API writes, including explicit empty strings.
+		if ( ! is_array( $value ) ) {
+			return self::sanitize_key( $value );
+		}
+		if ( self::sanitize_checkbox( $value['clear'] ?? false ) ) {
+			return '';
+		}
+		$current = self::sanitize_key( get_option( 'ya_api_key', '' ) );
+		$entered = $value['value'] ?? '';
+		if ( is_string( $entered ) && '' === trim( $entered ) ) {
+			return $current;
+		}
+		$validated = self::sanitize_key( $entered );
+		if ( '' === $validated ) {
+			add_settings_error( 'translit_it_settings', 'invalid_api_key', __( 'Не удалось сохранить API-ключ. Проверьте скопированное значение. Прежний ключ сохранён.', 'translit-it' ) );
+			return $current;
+		}
+		return $validated;
 	}
 
 	/** Keep the legacy folder setting without accepting arbitrary HTML. */
@@ -155,7 +183,16 @@ final class Translit_It {
 
 	/** Preserve the old settings URL and require administrative capabilities. */
 	public static function add_menu() {
-		add_options_page( __( 'Транслитерируй это!', 'translit-it' ), __( 'Транслитерируй это!', 'translit-it' ), 'manage_options', 'translit-it/index.php', array( __CLASS__, 'render_settings' ) );
+		self::$settings_page = (string) add_options_page( __( 'Транслитерируй это!', 'translit-it' ), __( 'Транслитерируй это!', 'translit-it' ), 'manage_options', 'translit-it/index.php', array( __CLASS__, 'render_settings' ) );
+	}
+
+	/** Load the screen's CSS and JavaScript only on this settings page. */
+	public static function enqueue_settings_assets( $hook_suffix ) {
+		if ( '' === self::$settings_page || self::$settings_page !== $hook_suffix ) {
+			return;
+		}
+		wp_enqueue_style( 'translit-it-settings', plugins_url( 'assets/admin.css', __FILE__ ), array(), self::VERSION );
+		wp_enqueue_script( 'translit-it-settings', plugins_url( 'assets/admin.js', __FILE__ ), array(), self::VERSION, array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}
 
 	/** Render escaped settings; options.php handles authorization and CSRF. */
@@ -164,47 +201,10 @@ final class Translit_It {
 			wp_die( esc_html__( 'У вас нет доступа к настройкам плагина.', 'translit-it' ), '', array( 'response' => 403 ) );
 		}
 		$mode   = self::sanitize_mode( get_option( 'rtl_standard', 'off' ) );
-		$key    = get_option( 'ya_api_key', '' );
+		$has_key = '' !== self::sanitize_key( get_option( 'ya_api_key', '' ) );
 		$folder = get_option( 'folder_id', '' );
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Транслитерируй это!', 'translit-it' ); ?></h1>
-			<?php settings_errors(); ?>
-			<p><?php esc_html_e( 'Выберите способ создания адресов новых записей, страниц и рубрик. Существующие адреса автоматически не изменяются.', 'translit-it' ); ?></p>
-			<form action="options.php" method="post">
-				<?php settings_fields( 'translit_it_settings' ); ?>
-				<table class="form-table" role="presentation">
-					<tr>
-						<th scope="row"><label for="rtl_standard"><?php esc_html_e( 'Способ преобразования', 'translit-it' ); ?></label></th>
-						<td><select id="rtl_standard" name="rtl_standard">
-							<option value="off" <?php selected( $mode, 'off' ); ?>><?php esc_html_e( 'Отключено', 'translit-it' ); ?></option>
-							<option value="talk" <?php selected( $mode, 'talk' ); ?>><?php esc_html_e( 'Разговорная транслитерация', 'translit-it' ); ?></option>
-							<option value="iso" <?php selected( $mode, 'iso' ); ?>><?php esc_html_e( 'Транслитерация ISO (прежняя таблица)', 'translit-it' ); ?></option>
-							<option value="cloud_yandex" <?php selected( $mode, 'cloud_yandex' ); ?>><?php esc_html_e( 'Yandex Cloud Translate', 'translit-it' ); ?></option>
-							<option value="yandex" <?php selected( $mode, 'yandex' ); ?>><?php esc_html_e( 'Yandex Translate API 1.5 (устаревший)', 'translit-it' ); ?></option>
-						</select></td>
-					</tr>
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Резервная транслитерация', 'translit-it' ); ?></th>
-						<td><label><input type="checkbox" name="rtl_translate" value="1" <?php checked( self::sanitize_checkbox( get_option( 'rtl_translate', false ) ) ); ?>> <?php esc_html_e( 'Транслитерировать результат перевода; при ошибке переводчика использовать транслитерацию исходного текста.', 'translit-it' ); ?></label></td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="ya_api_key"><?php esc_html_e( 'API-ключ Яндекса', 'translit-it' ); ?></label></th>
-						<td><input id="ya_api_key" name="ya_api_key" type="password" class="regular-text" autocomplete="new-password" value="<?php echo esc_attr( is_string( $key ) ? $key : '' ); ?>">
-						<p class="description"><?php esc_html_e( 'Для Yandex Cloud используйте API-ключ сервисного аккаунта с правом ai.translate.user. Локальная транслитерация работает без ключа и без отправки текста во внешние сервисы.', 'translit-it' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="folder_id"><?php esc_html_e( 'Прежний идентификатор каталога', 'translit-it' ); ?></label></th>
-						<td><input id="folder_id" name="folder_id" type="text" class="regular-text" value="<?php echo esc_attr( is_string( $folder ) ? $folder : '' ); ?>">
-						<p class="description"><?php esc_html_e( 'Сохранён для совместимости настроек. При использовании API-ключа сервисного аккаунта каталог определяется Яндексом автоматически.', 'translit-it' ); ?></p></td>
-					</tr>
-				</table>
-				<p><?php esc_html_e( 'При выборе перевода заголовок с кириллицей отправляется в Яндекс для создания адреса. При выборе транслитерации текст обрабатывается только на вашем сайте.', 'translit-it' ); ?></p>
-				<?php submit_button(); ?>
-			</form>
-		</div>
-		<?php
+		$fallback = self::sanitize_checkbox( get_option( 'rtl_translate', false ) );
+		require __DIR__ . '/includes/settings-page.php';
 	}
 }
 

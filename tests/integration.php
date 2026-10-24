@@ -15,7 +15,7 @@ function translit_test_same( $expected, $actual, $label ) {
 }
 function translit_test_option( $name, $value ) {
     // Emulate pre-upgrade values, including unsafe data saved by the old plugin.
-    $callback = array( 'Translit_It', array( 'rtl_standard' => 'sanitize_mode', 'rtl_translate' => 'sanitize_checkbox', 'ya_api_key' => 'sanitize_key', 'folder_id' => 'sanitize_folder' )[ $name ] );
+    $callback = array( 'Translit_It', array( 'rtl_standard' => 'sanitize_mode', 'rtl_translate' => 'sanitize_checkbox', 'ya_api_key' => 'sanitize_saved_key', 'folder_id' => 'sanitize_folder' )[ $name ] );
     remove_filter( 'sanitize_option_' . $name, $callback );
     update_option( $name, $value );
     add_filter( 'sanitize_option_' . $name, $callback );
@@ -57,6 +57,22 @@ foreach ( array( array( 'key' ), "key\r\nInjected: value", '<script>evil</script
 translit_test_same( 'test-api.key_123:ok', Translit_It::sanitize_key( ' test-api.key_123:ok ' ), 'Valid opaque key' );
 translit_test_same( '', Translit_It::sanitize_folder( array( 'folder' ) ), 'Array folder' );
 translit_test_same( '', Translit_It::sanitize_folder( '<script>evil</script>' ), 'HTML folder' );
+
+// The new UI does not need to receive a saved secret to preserve it.
+update_option( 'ya_api_key', 'saved-fixture-secret' );
+update_option( 'ya_api_key', array( 'value' => '' ) );
+translit_test_same( 'saved-fixture-secret', get_option( 'ya_api_key' ), 'Blank replacement preserves saved key' );
+update_option( 'ya_api_key', array( 'value' => 'replacement-fixture-secret' ) );
+translit_test_same( 'replacement-fixture-secret', get_option( 'ya_api_key' ), 'Structured replacement saves new key' );
+update_option( 'ya_api_key', array( 'value' => '<script>invalid</script>' ) );
+translit_test_same( 'replacement-fixture-secret', get_option( 'ya_api_key' ), 'Invalid replacement preserves saved key' );
+ob_start();
+Translit_It::render_settings();
+$secret_html = ob_get_clean();
+translit_test_same( false, strpos( $secret_html, 'replacement-fixture-secret' ) !== false, 'Saved secret is absent from settings HTML' );
+translit_test_same( true, strpos( $secret_html, 'name="ya_api_key[clear]"' ) !== false, 'Saved key has an explicit deletion control' );
+update_option( 'ya_api_key', array( 'value' => '', 'clear' => '1' ) );
+translit_test_same( '', get_option( 'ya_api_key' ), 'Explicit deletion removes saved key' );
 
 // Frozen compatibility fixtures retain the original 1.8.0 transliteration tables.
 $original = json_decode( file_get_contents( __DIR__ . '/fixtures/transliteration.json' ), true );
@@ -158,7 +174,7 @@ Translit_It::render_settings();
 $html = ob_get_clean();
 translit_test_same( false, strpos( $html, '<script>alert(1)</script>' ) !== false, 'Stored key XSS escaped' );
 translit_test_same( false, strpos( $html, '<img src=x' ) !== false, 'Stored folder XSS escaped' );
-translit_test_same( true, strpos( $html, '&lt;script&gt;' ) !== false, 'Legacy malicious value encoded' );
+translit_test_same( false, strpos( $html, 'alert(1)' ) !== false, 'Legacy malicious key is never returned in HTML' );
 translit_test_same( true, strpos( $html, 'name="_wpnonce"' ) !== false, 'Nonce in form' );
 translit_test_same( true, strpos( $html, 'action="options.php"' ) !== false, 'Core settings handler' );
 $count = count( $requests );

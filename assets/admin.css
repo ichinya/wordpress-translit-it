@@ -1,0 +1,76 @@
+.translit-it-settings {
+	--translit-accent: var(--wp-admin-theme-color, #2271b1);
+	max-width: 1160px;
+	margin-top: 24px;
+}
+.translit-it-settings [hidden] { display: none !important; }
+.translit-it-settings *, .translit-it-settings *::before, .translit-it-settings *::after { box-sizing: border-box; }
+.translit-it-header { margin-bottom: 24px; }
+.translit-it-brand { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #50575e; }
+.translit-it-brand span { font-size: 11px; font-weight: 400; padding: 2px 7px; border: 1px solid #dcdcde; border-radius: 3px; }
+.translit-it-header h1 { padding: 0; font-size: 26px; font-weight: 600; line-height: 1.3; }
+.translit-it-header > p:last-child { margin: 10px 0 0; font-size: 14px; color: #646970; }
+.translit-it-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start; }
+.translit-it-main { display: grid; gap: 20px; min-width: 0; }
+.translit-it-panel { min-width: 0; background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 24px; }
+.translit-it-panel h2, .translit-it-modes legend { margin: 0; padding: 0; font-size: 17px; font-weight: 600; line-height: 1.5; color: #1d2327; }
+.translit-it-modes { margin: 0; min-width: 0; }
+.translit-it-lead { margin: 8px 0 20px; color: #646970; line-height: 1.7; }
+.translit-it-mode-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.translit-it-mode { display: flex; align-items: flex-start; gap: 10px; padding: 16px; border: 1px solid #c3c4c7; border-radius: 5px; cursor: pointer; background: #fff; transition: border-color .12s, box-shadow .12s; }
+.translit-it-mode:hover { border-color: #787c82; }
+.translit-it-mode.is-selected, .translit-it-mode:has(input:checked) { border-color: var(--translit-accent); box-shadow: inset 0 0 0 1px var(--translit-accent); background: #f6fafd; }
+.translit-it-mode:focus-within { outline: 2px solid var(--translit-accent); outline-offset: 3px; }
+.translit-it-mode input[type=radio] { flex-shrink: 0; margin: 3px 0 0; }
+.translit-it-mode-body { display: block; min-width: 0; }
+.translit-it-mode-heading { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 6px 9px; margin-bottom: 8px; }
+.translit-it-mode-heading strong { font-size: 14px; line-height: 1.5; }
+.translit-it-tag { display: inline-block; font-size: 10px; line-height: 18px; font-weight: 500; padding: 0 6px; border-radius: 3px; background: #f0f0f1; color: #50575e; white-space: nowrap; }
+.translit-it-mode-description { display: block; color: #646970; font-size: 12px; line-height: 1.65; }
+.translit-it-advanced { margin-top: 22px; padding-top: 18px; border-top: 1px solid #f0f0f1; }
+.translit-it-advanced summary { cursor: pointer; color: #50575e; font-size: 12px; }
+.translit-it-advanced summary:focus-visible { outline: 2px solid var(--translit-accent); outline-offset: 4px; }
+.translit-it-legacy-choice { display: block; margin-top: 18px; }
+.translit-it-advanced .description { margin: 8px 0 14px; }
+.translit-it-field-label { display: block; font-weight: 600; margin: 18px 0 8px; }
+.translit-it-settings input.regular-text { width: 100%; max-width: 100%; min-height: 38px; margin: 0; }
+.translit-it-key-field { display: flex; align-items: stretch; gap: 8px; }
+.translit-it-key-field input { min-width: 0; flex: 1; }
+.translit-it-key-field .button { flex-shrink: 0; min-height: 38px; }
+.translit-it-section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.translit-it-key-status { font-size: 11px; padding: 3px 8px; border-radius: 3px; background: #f0f0f1; color: #50575e; }
+.translit-it-key-status.has-key { color: #185c37; background: #edf7f0; }
+.translit-it-clear-key { display: block; margin: 14px 0 0; font-size: 12px; color: #646970; }
+.translit-it-settings .description { font-size: 12px; line-height: 1.65; color: #646970; }
+.translit-it-fallback { margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0f0f1; }
+.translit-it-fallback label { display: flex; align-items: flex-start; gap: 8px; }
+.translit-it-fallback input[type=checkbox] { flex-shrink: 0; margin: 2px 0 0; }
+.translit-it-fallback .description { margin: 8px 0 0 24px; }
+.translit-it-privacy { border-left: 3px solid #dcdcde; margin: 20px 0 0; padding-left: 12px; font-size: 12px; line-height: 1.65; color: #646970; }
+.translit-it-sidebar { display: grid; gap: 16px; }
+.translit-it-sidebar .translit-it-panel { padding: 22px; }
+.translit-it-preview { background: #f9fafb; }
+.translit-it-preview h2 { font-size: 15px; margin-bottom: 20px; }
+.translit-it-preview-label { color: #646970; font-size: 11px; margin: 0 0 6px; }
+.translit-it-example-title { font-size: 17px; font-weight: 500; margin: 0 0 24px; color: #1d2327; }
+.translit-it-preview-result { overflow-wrap: anywhere; margin: 0 0 14px; padding: 12px; border: 1px solid #dcdcde; border-radius: 4px; background: #fff; font: 13px/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; color: #135e96; }
+.translit-it-note h2 { font-size: 14px; }
+.translit-it-note p { font-size: 12px; line-height: 1.75; color: #646970; margin: 10px 0 0; }
+.translit-it-save-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; padding: 20px 0; margin-top: 4px; }
+.translit-it-save-bar .button-primary { min-height: 36px; padding: 0 16px; }
+.translit-it-save-bar [role=status] { font-size: 12px; color: #646970; }
+.translit-it-save-bar [role=status].is-dirty { color: #996800; }
+@media (prefers-reduced-motion: reduce) { .translit-it-mode { transition: none; } }
+@media screen and (max-width: 1100px) {
+	.translit-it-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+	.translit-it-sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
+@media screen and (max-width: 600px) {
+	.translit-it-settings { margin-top: 18px; }
+	.translit-it-header h1 { font-size: 23px; }
+	.translit-it-mode-grid, .translit-it-sidebar { grid-template-columns: minmax(0, 1fr); }
+	.translit-it-panel, .translit-it-sidebar .translit-it-panel { padding: 18px; }
+	.translit-it-mode { padding: 14px; }
+	.translit-it-save-bar { align-items: flex-start; flex-direction: column; }
+	.translit-it-key-field .button, .translit-it-settings input.regular-text, .translit-it-save-bar .button-primary { min-height: 44px; }
+}
