@@ -12,7 +12,7 @@ permissions:
 jobs:
   integration:
     name: WordPress ${{ matrix.wordpress }} / PHP ${{ matrix.php }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -44,7 +44,7 @@ jobs:
     env:
       TRANSLIT_IT_TESTS: '1'
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           persist-credentials: false
       - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
@@ -65,6 +65,10 @@ jobs:
           wp config set DISABLE_WP_CRON true --raw --path="$WP_ROOT"
           wp config set AUTOMATIC_UPDATER_DISABLED true --raw --path="$WP_ROOT"
           wp core install --path="$WP_ROOT" --url=http://127.0.0.1:18947 --title='translit it compatibility tests' --admin_user=translit_test_admin --admin_password=fixture-only-isolated-admin-20261024 --admin_email=tests@example.invalid --skip-email
+          if [ '${{ matrix.wordpress }}' = '6.0.17' ]; then
+            # The archived Twenty Twenty-Two bundle contains a missing required pattern.
+            wp theme install twentytwentyone --version=2.9 --activate --skip-themes --path="$WP_ROOT"
+          fi
           wp plugin install "$RUNNER_TEMP/translit-it.zip" --activate --path="$WP_ROOT"
           wp user create translit_test_subscriber subscriber@example.invalid --role=subscriber --user_pass=fixture-only-isolated-admin-20261024 --path="$WP_ROOT"
       - name: Install Plugin Check
