@@ -42,7 +42,6 @@ jobs:
           --health-timeout=5s
           --health-retries=10
     env:
-      WP_ROOT: ${{ runner.temp }}/wordpress
       TRANSLIT_IT_TESTS: '1'
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -54,6 +53,8 @@ jobs:
           extensions: mysqli, mbstring, curl, zip
           tools: wp-cli:2.12.0
           coverage: none
+      - name: Configure isolated WordPress directory
+        run: echo "WP_ROOT=$RUNNER_TEMP/wordpress" >> "$GITHUB_ENV"
       - name: Build and install the release into an isolated WordPress
         shell: bash
         run: |
