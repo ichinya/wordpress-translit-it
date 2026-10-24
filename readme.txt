@@ -2,10 +2,10 @@
 Contributors: Ichi-nya
 Donate link: https://sobe.ru/na/translit_it
 Tags: transliteration, slugs, russian, translation, permalinks
-Requires at least: 6.0
+Requires at least: 7.1
 Tested up to: 7.1.3
-Requires PHP: 7.4
-Stable tag: 1.8.1
+Requires PHP: 8.4
+Stable tag: 1.8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,10 @@ Local transliteration does not require an API key, does not send data to any ext
 The plugin does not run a bulk rewrite of existing permalinks. WordPress still handles slug cleanup and uniqueness. Explicitly changing or regenerating a slug can change its URL, as usual.
 
 Settings are available under Settings > Транслитерируй это!.
+
+= Minimum requirements =
+
+WordPress 7.1 or later and PHP 8.4 or later are required. PHP 8.5 is also tested.
 
 = External services =
 
@@ -59,6 +63,10 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 
 == Changelog ==
 
+= 1.8.2 =
+* Set the minimum supported versions to WordPress 7.1 and PHP 8.4.
+* Align the plugin header, readme and automated compatibility matrix with these requirements; keep PHP 8.5 coverage.
+
 = 1.8.1 =
 * Confirm compatibility with WordPress 7.1.3, including block-editor REST draft previews, publishing, autosaves, pages, categories and explicit slugs.
 * Add reproducible integration and authenticated settings-security tests, with automated WordPress/PHP compatibility checks.
@@ -88,6 +96,9 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 * Added WordPress 5 support.
 
 == Upgrade Notice ==
+
+= 1.8.2 =
+This release requires WordPress 7.1 or later and PHP 8.4 or later. PHP 8.5 is also supported.
 
 = 1.8.1 =
 WordPress 7.1 compatibility verification with automated editor and settings-security regression coverage. Existing settings and slug conversion behavior are retained.
