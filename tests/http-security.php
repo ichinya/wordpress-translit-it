@@ -65,7 +65,7 @@ try {
     check_test( 200 === $status && strpos( $html, 'name="rtl_standard"' ) !== false, 'Administrator can open settings' );
     $nonce = nonce_test( $html );
     check_test( '' !== $nonce, 'Administrator receives a real nonce' );
-    $fields = array( 'option_page' => 'translit_it_settings', 'action' => 'update', 'rtl_standard' => 'iso', 'rtl_translate' => '1', 'ya_api_key' => '\"><script>alert(1)</script>', 'folder_id' => '\"><img src=x onerror=alert(2)>' );
+    $fields = array( 'option_page' => 'translit_it_settings', 'action' => 'update', '_wp_http_referer' => $page, 'rtl_standard' => 'iso', 'rtl_translate' => '1', 'ya_api_key' => '\"><script>alert(1)</script>', 'folder_id' => '\"><img src=x onerror=alert(2)>' );
 
     list( $status ) = request_test( '/wp-admin/options.php', $fields );
     check_test( 403 === $status, 'Settings POST without nonce is rejected' );
@@ -79,8 +79,9 @@ try {
     check_test( 'talk' === selected_mode_test( $html ), 'Old vulnerable settings URL no longer saves POST data' );
 
     $fields['_wpnonce'] = $nonce;
-    list( $status ) = request_test( '/wp-admin/options.php', $fields );
+    list( $status, $saved_html ) = request_test( '/wp-admin/options.php', $fields );
     check_test( 200 === $status, 'Valid administrator save completes' );
+    check_test( 1 === substr_count( $saved_html, 'setting-error-settings_updated' ), 'Successful save shows exactly one notice' );
     list( , $html ) = request_test( $page );
     check_test( 'iso' === selected_mode_test( $html ), 'Valid save persists selected mode' );
     check_test( strpos( $html, '<script>alert(1)</script>' ) === false && strpos( $html, '<img src=x' ) === false, 'Saved payloads do not execute as HTML' );
