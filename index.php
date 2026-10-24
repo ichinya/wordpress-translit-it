@@ -3,7 +3,7 @@
  * Plugin Name: translit it!
  * Plugin URI: https://wordpress.org/plugins/translit-it/
  * Description: Transliterates Russian slugs or translates them into English with Yandex Translate.
- * Version: 1.8.0
+ * Version: 1.8.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: Ichi-nya

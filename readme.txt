@@ -3,9 +3,9 @@ Contributors: Ichi-nya
 Donate link: https://sobe.ru/na/translit_it
 Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.1.3
 Requires PHP: 7.4
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,12 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 
 == Changelog ==
 
+= 1.8.1 =
+* Confirm compatibility with WordPress 7.1.3, including block-editor REST draft previews, publishing, autosaves, pages, categories and explicit slugs.
+* Add reproducible integration and authenticated settings-security tests, with automated WordPress/PHP compatibility checks.
+* Keep API keys outside the REST settings endpoint and verify fallback publishing when the translation service is unavailable.
+* Preserve the existing transliteration tables, settings and publishing behavior.
+
 = 1.8.0 =
 * Security: replace direct settings writes with the WordPress Settings API, capability checks and nonce protection; validate inputs and escape output. Addresses the CSRF/stored XSS issue reported as CVE-2025-39416.
 * Preserve the plugin entry file, original option names and transliteration tables.
@@ -82,6 +88,9 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 * Added WordPress 5 support.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+WordPress 7.1 compatibility verification with automated editor and settings-security regression coverage. Existing settings and slug conversion behavior are retained.
 
 = 1.8.0 =
 Security update addressing CSRF and stored XSS in settings. Existing option names and transliteration tables are retained. Check your selected translation mode and fallback setting after updating.

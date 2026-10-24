@@ -1,0 +1,94 @@
+name: WordPress compatibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: WordPress ${{ matrix.wordpress }} / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - wordpress: '6.0.17'
+            php: '7.4'
+          - wordpress: '7.1.3'
+            php: '7.4'
+          - wordpress: '7.1.3'
+            php: '8.0'
+          - wordpress: '7.1.3'
+            php: '8.4'
+          - wordpress: '7.1.3'
+            php: '8.5'
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci-database-password
+          MYSQL_DATABASE: translit_it_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci-database-password"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      WP_ROOT: ${{ runner.temp }}/wordpress
+      TRANSLIT_IT_TESTS: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli, mbstring, curl, zip
+          tools: wp-cli:2.12.0
+          coverage: none
+      - name: Build and install the release into an isolated WordPress
+        shell: bash
+        run: |
+          set -euo pipefail
+          php tools/build-release.php "$RUNNER_TEMP/translit-it.zip"
+          wp core download --path="$WP_ROOT" --version='${{ matrix.wordpress }}'
+          wp config create --path="$WP_ROOT" --dbname=translit_it_test --dbuser=root --dbpass=ci-database-password --dbhost=127.0.0.1:3306
+          wp config set DISABLE_WP_CRON true --raw --path="$WP_ROOT"
+          wp config set AUTOMATIC_UPDATER_DISABLED true --raw --path="$WP_ROOT"
+          wp core install --path="$WP_ROOT" --url=http://127.0.0.1:18947 --title='translit it compatibility tests' --admin_user=translit_test_admin --admin_password=fixture-only-isolated-admin-20261024 --admin_email=tests@example.invalid --skip-email
+          wp plugin install "$RUNNER_TEMP/translit-it.zip" --activate --path="$WP_ROOT"
+          wp user create translit_test_subscriber subscriber@example.invalid --role=subscriber --user_pass=fixture-only-isolated-admin-20261024 --path="$WP_ROOT"
+      - name: Install Plugin Check
+        if: matrix.wordpress == '7.1.3' && matrix.php == '8.4'
+        run: wp plugin install plugin-check --activate --path="$WP_ROOT"
+      - name: Run integration and block-editor REST tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          wp config set WP_HTTP_BLOCK_EXTERNAL true --raw --path="$WP_ROOT"
+          wp eval-file "$GITHUB_WORKSPACE/tests/integration.php" --path="$WP_ROOT"
+      - name: Run authenticated HTTP settings-security tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          wp option update rtl_standard talk --path="$WP_ROOT"
+          wp option update rtl_translate 1 --path="$WP_ROOT"
+          php -S 127.0.0.1:18947 -t "$WP_ROOT" >"$RUNNER_TEMP/php-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:18947/wp-login.php >/dev/null; then break; fi
+            sleep 1
+          done
+          php tests/http-security.php
+      - name: Run Plugin Check including runtime checks
+        if: matrix.wordpress == '7.1.3' && matrix.php == '8.4'
+        run: wp plugin check translit-it --path="$WP_ROOT" --require="$WP_ROOT/wp-content/plugins/plugin-check/cli.php"
