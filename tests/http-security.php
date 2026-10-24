@@ -1,7 +1,8 @@
 <?php
 /** Exercise core's real settings handler against a loopback-only test server. */
 if ( 'cli' !== PHP_SAPI || '1' !== getenv( 'TRANSLIT_IT_TESTS' ) ) {
-    exit( 'Run only in an isolated test installation with TRANSLIT_IT_TESTS=1.' );
+    if ( 'cli' === PHP_SAPI ) { fwrite( STDERR, 'Run only in an isolated test installation with TRANSLIT_IT_TESTS=1.' . PHP_EOL ); }
+    exit( 1 );
 }
 $base = 'http://127.0.0.1:18947';
 $cookie = tempnam( sys_get_temp_dir(), 'translit-cookies-' );
@@ -26,7 +27,6 @@ function request_test( $path, $fields = null ) {
         throw new RuntimeException( curl_error( $curl ) );
     }
     $status = curl_getinfo( $curl, CURLINFO_RESPONSE_CODE );
-    curl_close( $curl );
     return array( $status, $body );
 }
 function check_test( $condition, $label ) {

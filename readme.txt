@@ -5,7 +5,7 @@ Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 7.1
 Tested up to: 7.1.3
 Requires PHP: 8.4
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,8 @@ External translation is optional and disabled by default. It is used only when a
 
 Requests have a five-second timeout and do not follow redirects. Enable fallback transliteration to generate a Latin slug when translation fails. Without fallback, WordPress receives the original text. Translation responses are reused only within the current PHP request; the plugin does not persist a translation cache or log API keys.
 
+After the first failed response from a translation mode and API key, further uncached translations using that configuration are skipped until the next PHP request. Previously successful responses remain available. This avoids repeated timeout delays during bulk operations. Nested uncached translations from HTTP hooks and titles longer than 10,000 Unicode characters also use the configured fallback without an external call.
+
 == Installation ==
 
 1. Upload the translit-it folder to /wp-content/plugins/ or install the plugin from WordPress.org when available.
@@ -62,6 +64,12 @@ It retains the historical ASCII table from this plugin for URL compatibility; it
 Its stored value is preserved during upgrades. Yandex Cloud API keys use their service account's folder, so the legacy identifier is not sent in API-key requests.
 
 == Changelog ==
+
+= 1.8.3 =
+* Avoid repeated translation requests after a service failure within the same PHP request, while retaining successful cached responses.
+* Prevent recursive translation calls triggered by third-party HTTP hooks.
+* Check the 10,000-character input limit before sending a translation request.
+* Add regressions for outages, HTTP-hook reentry, input length and API-key changes; keep the existing slug tables and fallback setting.
 
 = 1.8.2 =
 * Set the minimum supported versions to WordPress 7.1 and PHP 8.4.
@@ -96,6 +104,9 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 * Added WordPress 5 support.
 
 == Upgrade Notice ==
+
+= 1.8.3 =
+Reduces repeated waits when translation is unavailable and prevents nested translation calls. WordPress 7.1+ and PHP 8.4+ remain required.
 
 = 1.8.2 =
 This release requires WordPress 7.1 or later and PHP 8.4 or later. PHP 8.5 is also supported.

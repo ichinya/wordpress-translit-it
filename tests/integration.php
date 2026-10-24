@@ -2,7 +2,8 @@
 /** Run with wp eval-file inside an isolated WordPress installation. */
 
 if ( ! defined( 'WP_CLI' ) || ! WP_CLI || '1' !== getenv( 'TRANSLIT_IT_TESTS' ) ) {
-    exit( 'Run only in an isolated test installation with TRANSLIT_IT_TESTS=1.' );
+    if ( 'cli' === PHP_SAPI ) { fwrite( STDERR, 'Run only in an isolated test installation with TRANSLIT_IT_TESTS=1.' . PHP_EOL ); }
+    exit( 1 );
 }
 
 $GLOBALS['translit_test_checks'] = 0;
@@ -127,6 +128,7 @@ $cases = array(
     array( 'response' => array( 'code' => 200 ), 'body' => '{"translations":[{"text":" "}]}' ),
 );
 foreach ( $cases as $i => $case ) {
+    update_option( 'ya_api_key', 'invalid-response-fixture-key-' . $i );
     $fixture = $case;
     $title   = 'Ошибка перевода ' . $i;
     translit_test_same( translit_it_convert( $title ), Translit_It::filter_title( $title ), 'Fallback after malformed/error response ' . $i );
@@ -174,4 +176,5 @@ wp_delete_post( $manual, true );
 wp_delete_post( $page, true );
 wp_delete_term( $term['term_id'], 'category' );
 require __DIR__ . '/rest.php';
+require __DIR__ . '/translation-failures.php';
 echo 'PASS: ' . $GLOBALS['translit_test_checks'] . ' WordPress integration checks on ' . get_bloginfo( 'version' ) . ' / PHP ' . PHP_VERSION . PHP_EOL;

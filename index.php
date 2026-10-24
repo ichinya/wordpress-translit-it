@@ -3,7 +3,7 @@
  * Plugin Name: translit it!
  * Plugin URI: https://wordpress.org/plugins/translit-it/
  * Description: Transliterates Russian slugs or translates them into English with Yandex Translate.
- * Version: 1.8.2
+ * Version: 1.8.3
  * Requires at least: 7.1
  * Requires PHP: 8.4
  * Author: Ichi-nya
@@ -24,7 +24,13 @@ require_once __DIR__ . '/includes/transliteration.php';
 /** Slug conversion and the settings page. */
 final class Translit_It {
 	/** Reuse responses within one request, without storing titles or API keys. */
-	private static $translations = array();
+	private static array $translations = array();
+
+	/** Avoid repeated waits after a translator fails during this PHP request. */
+	private static array $unavailable_translators = array();
+
+	/** HTTP hooks can generate slugs while a translation is still in progress. */
+	private static bool $translating = false;
 
 	/** Register hooks. */
 	public static function boot() {
@@ -83,17 +89,31 @@ final class Translit_It {
 			return $title;
 		}
 		$fallback = self::sanitize_checkbox( get_option( 'rtl_translate', false ) );
+		$fallback_title = $fallback ? translit_it_convert( $title ) : $title;
 		$key      = self::sanitize_key( get_option( 'ya_api_key', '' ) );
-		if ( '' === $key ) {
-			return $fallback ? translit_it_convert( $title ) : $title;
+		// Bound Unicode text before sending it; the Cloud API permits 10,000 characters.
+		if ( '' === $key || 1 !== preg_match( '/\A.{1,10000}\z/us', $title ) ) {
+			return $fallback_title;
 		}
+		$translator_key = hash( 'sha256', $mode . "\0" . $key );
 		$cache_key = hash( 'sha256', $mode . "\0" . $key . "\0" . $title );
 		if ( ! array_key_exists( $cache_key, self::$translations ) ) {
-			self::$translations[ $cache_key ] = self::translate( $title, $mode, $key );
+			if ( self::$translating || isset( self::$unavailable_translators[ $translator_key ] ) ) {
+				return $fallback_title;
+			}
+			self::$translating = true;
+			try {
+				self::$translations[ $cache_key ] = self::translate( $title, $mode, $key );
+			} finally {
+				self::$translating = false;
+			}
+			if ( null === self::$translations[ $cache_key ] ) {
+				self::$unavailable_translators[ $translator_key ] = true;
+			}
 		}
 		$translated = self::$translations[ $cache_key ];
 		if ( null === $translated ) {
-			return $fallback ? translit_it_convert( $title ) : $title;
+			return $fallback_title;
 		}
 		return $fallback ? translit_it_convert( $translated ) : $translated;
 	}
