@@ -1,0 +1,270 @@
+# Russian translation of the translit it! plugin readme.
+# License: GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: translit it! 1.9.1 Readme\n"
+"Language: ru\n"
+"Language-Team: Russian\n"
+"Last-Translator: Ichi-nya\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid "translit it!"
+msgstr "Транслитерируй это!"
+
+msgid "Transliterate Russian slugs locally, or translate them into English with Yandex Translate."
+msgstr "Транслитерация русских адресов на вашем сайте или перевод на английский с помощью Яндекс Переводчика."
+
+msgid "translit it! creates Latin slugs for Russian post titles, pages and taxonomy terms."
+msgstr "«Транслитерируй это!» создаёт адреса латиницей для русских названий записей, страниц и элементов таксономий."
+
+msgid "Choose between the original conversational and ISO-style transliteration tables, or an optional Yandex translation service. The original transliteration tables and option names are retained for compatibility with existing installations."
+msgstr "Выберите исходную разговорную таблицу транслитерации, таблицу в стиле ISO или необязательный сервис перевода Яндекса. Исходные таблицы и имена настроек сохранены для совместимости с существующими установками."
+
+msgid "Local transliteration does not require an API key, does not send data to any external service and works without a network connection."
+msgstr "Локальная транслитерация не требует API-ключа, не отправляет данные во внешние сервисы и работает без подключения к сети."
+
+msgid "The plugin does not run a bulk rewrite of existing permalinks. WordPress still handles slug cleanup and uniqueness. Explicitly changing or regenerating a slug can change its URL, as usual."
+msgstr "Плагин не выполняет массовую перезапись существующих постоянных ссылок. Очисткой и уникальностью адресов по-прежнему управляет WordPress. Как обычно, явное изменение или повторное создание адреса может изменить его URL."
+
+msgid "Settings are available under Settings &gt; Translit it! (Настройки &gt; Транслитерируй это! in Russian)."
+msgstr "Настройки доступны в разделе «Настройки &gt; Транслитерируй это!» (Settings &gt; Translit it! в английском интерфейсе)."
+
+msgid "The settings screen includes conversion-mode cards, a local slug example and a separate Yandex connection section. Saved API keys are never sent back to the page: leave the replacement field blank to keep your key, or explicitly select its deletion. Legacy options remain available in a collapsible section. The form also works without JavaScript."
+msgstr "На странице настроек есть карточки режимов, локальный пример адреса и отдельный раздел подключения Яндекса. Сохранённый API-ключ никогда не возвращается в HTML страницы: оставьте поле замены пустым, чтобы сохранить ключ, или явно выберите его удаление. Старые настройки доступны в раскрывающемся разделе. Форма работает и без JavaScript."
+
+msgid "Minimum requirements"
+msgstr "Минимальные требования"
+
+msgid "WordPress 7.1 or later and PHP 8.4 or later are required. PHP 8.5 is also tested."
+msgstr "Требуются WordPress 7.1 или новее и PHP 8.4 или новее. Также проверена работа на PHP 8.5."
+
+msgid "External services"
+msgstr "Внешние сервисы"
+
+msgid "External translation is optional and disabled by default. It is used only when an administrator selects a Yandex translation mode and supplies an API key. When WordPress generates a slug in a save context and the source contains Cyrillic, that source text is sent to the selected Yandex service. Depending on the WordPress operation, this may include unpublished post titles or taxonomy names. Already Latin text does not trigger a translation request."
+msgstr "Внешний перевод необязателен и по умолчанию выключен. Он используется, только если администратор выбирает режим перевода Яндекса и указывает API-ключ. Когда WordPress создаёт адрес для сохранения и исходный текст содержит кириллицу, этот текст отправляется в выбранный сервис Яндекса. В зависимости от операции WordPress это могут быть названия неопубликованных записей или элементов таксономий. Текст, уже записанный латиницей, не вызывает запрос перевода."
+
+msgid "Yandex Cloud Translate: requests are sent to https://translate.api.cloud.yandex.net/translate/v2/translate with the source text, Russian/English language codes and the configured API key. Use a service-account API key with the ai.translate.user role; its folder is selected by Yandex automatically. A paid Yandex account or usage charges may be required. Documentation: https://yandex.cloud/en/docs/translate/ . Terms: https://yandex.com/legal/cloud_terms/ . Privacy policy: https://yandex.com/legal/confidential/ ."
+msgstr "Yandex Cloud Translate: запросы отправляются на https://translate.api.cloud.yandex.net/translate/v2/translate и содержат исходный текст, коды русского и английского языков и настроенный API-ключ. Используйте API-ключ сервисного аккаунта с ролью ai.translate.user; Яндекс определяет его каталог автоматически. Может потребоваться платный аккаунт Яндекса или оплата использования. Документация: https://yandex.cloud/en/docs/translate/ . Условия: https://yandex.com/legal/cloud_terms/ . Политика конфиденциальности: https://yandex.com/legal/confidential/ ."
+
+msgid "Legacy Yandex Translate API 1.5: retained for existing settings and keys. Requests are sent to https://translate.yandex.net/api/v1.5/tr.json/translate with the source text, language pair and configured API key. Availability of this old service is not guaranteed; use local transliteration or Yandex Cloud for a new setup. Terms: https://yandex.com/legal/translate_api/ . Privacy policy: https://yandex.com/legal/confidential/ ."
+msgstr "Устаревший Yandex Translate API 1.5: сохранён для существующих настроек и ключей. Запросы отправляются на https://translate.yandex.net/api/v1.5/tr.json/translate и содержат исходный текст, языковую пару и настроенный API-ключ. Доступность этого старого сервиса не гарантируется; для нового подключения используйте локальную транслитерацию или Yandex Cloud. Условия: https://yandex.com/legal/translate_api/ . Политика конфиденциальности: https://yandex.com/legal/confidential/ ."
+
+msgid "Requests have a five-second timeout and do not follow redirects. Enable fallback transliteration to generate a Latin slug when translation fails. Without fallback, WordPress receives the original text. Translation responses are reused only within the current PHP request; the plugin does not persist a translation cache or log API keys."
+msgstr "Время ожидания запроса ограничено пятью секундами; переходы по перенаправлениям отключены. Включите подстраховку транслитерацией, чтобы при ошибке перевода создавать адрес латиницей. Без неё WordPress получает исходный текст. Ответы переводчика повторно используются только в пределах текущего PHP-запроса; плагин не хранит постоянный кеш переводов и не записывает API-ключи в журнал."
+
+msgid "After the first failed response from a translation mode and API key, further uncached translations using that configuration are skipped until the next PHP request. Previously successful responses remain available. This avoids repeated timeout delays during bulk operations. Nested uncached translations from HTTP hooks and titles longer than 10,000 Unicode characters also use the configured fallback without an external call."
+msgstr "После первого неудачного ответа для выбранного режима и API-ключа последующие переводы без кешированного результата пропускаются до следующего PHP-запроса. Ранее полученные успешные ответы остаются доступны. Это предотвращает повторные задержки при массовых операциях. Вложенные переводы из HTTP-хуков и названия длиннее 10 000 символов Unicode также используют настроенную подстраховку без внешнего запроса."
+
+msgid "Install translit it! from the WordPress.org plugin directory, or upload the translit-it folder to /wp-content/plugins/."
+msgstr "Установите «Транслитерируй это!» из каталога плагинов WordPress.org или загрузите папку translit-it в /wp-content/plugins/."
+
+msgid "Activate translit it!."
+msgstr "Активируйте «Транслитерируй это!»."
+
+msgid "Open Settings &gt; Translit it! and choose a conversion mode."
+msgstr "Откройте «Настройки &gt; Транслитерируй это!» и выберите режим преобразования."
+
+msgid "For local transliteration, no external account is needed. For Yandex Cloud, configure your service-account API key."
+msgstr "Для локальной транслитерации внешняя учётная запись не нужна. Для Yandex Cloud укажите API-ключ сервисного аккаунта."
+
+msgid "Is the plugin available in Russian?"
+msgstr "Доступен ли плагин на русском языке?"
+
+msgid "Yes. Version 1.9.1 includes a complete Russian interface translation and English source strings. WordPress uses the administrator's selected language; choose Russian in your WordPress user profile or site language settings. The Russian sample title stays unchanged so the transliteration example remains useful in either language."
+msgstr "Да. Версия 1.9.1 включает полный русский перевод интерфейса и английские исходные строки. WordPress использует язык, выбранный администратором; выберите русский язык в своём профиле WordPress или настройках языка сайта. Русское название в примере не меняется, чтобы пример транслитерации оставался полезным на обоих языках."
+
+msgid "The bundled Russian translation works immediately, without waiting for an official WordPress.org language pack. The translation notice on WordPress.org is controlled separately by the review and approval of translations on translate.wordpress.org."
+msgstr "Встроенный русский перевод работает сразу, без ожидания официального языкового пакета WordPress.org. Уведомление о переводе на WordPress.org управляется отдельно и зависит от проверки и одобрения переводов на translate.wordpress.org."
+
+msgid "How do I update from version 1.6?"
+msgstr "Как обновиться с версии 1.6?"
+
+msgid "First make sure your site runs WordPress 7.1 or later and PHP 8.4 or later, and back up your files and database. Open Plugins &gt; Installed Plugins and use Update now for translit it!. You do not need to uninstall the old version."
+msgstr "Сначала убедитесь, что на сайте используются WordPress 7.1 или новее и PHP 8.4 или новее, и создайте резервную копию файлов и базы данных. Откройте «Плагины &gt; Установленные» и нажмите «Обновить» для «Транслитерируй это!». Удалять старую версию не нужно."
+
+msgid "The selected conversion mode, fallback checkbox, API key and legacy folder identifier are retained. Open Settings &gt; Translit it! after updating to check them. Leave the API-key replacement field blank to keep the saved key."
+msgstr "Выбранный режим, галочка подстраховки, API-ключ и прежний идентификатор каталога сохраняются. После обновления откройте «Настройки &gt; Транслитерируй это!» и проверьте их. Оставьте поле замены API-ключа пустым, чтобы сохранить прежний ключ."
+
+msgid "Direct updates from 1.6 to 1.9.0 were checked through the WordPress admin on WordPress 7.1.3 / PHP 8.4 with MySQL 8.4 and, separately, SQLite. The checks covered Yandex Cloud with fallback enabled and legacy Yandex API 1.5 with fallback disabled, including saving the new form without re-entering the key. Stored options and existing post, page and category slugs were preserved. These checks used fictional keys and did not verify live Yandex translation."
+msgstr "Прямые обновления с 1.6 до 1.9.0 проверены через админку WordPress на WordPress 7.1.3 / PHP 8.4 с MySQL 8.4 и отдельно с SQLite. Проверены Yandex Cloud с включённой подстраховкой и старый Yandex API 1.5 с выключенной подстраховкой, включая сохранение новой формы без повторного ввода ключа. Значения настроек и существующие адреса записей, страниц и рубрик сохранились. В проверках использовались вымышленные ключи; реальный перевод через Яндекс не проверялся."
+
+msgid "Why is the API-key field empty after updating?"
+msgstr "Почему после обновления поле API-ключа пустое?"
+
+msgid "This is intentional: the saved key is not returned to the browser. The \"Ключ сохранён\" status means a valid key is already stored. Leave the replacement field blank to keep it, enter a new key to replace it, or select \"Удалить сохранённый ключ\" to remove it explicitly."
+msgstr "Это сделано намеренно: сохранённый ключ не возвращается в браузер. Статус «Ключ сохранён» означает, что допустимый ключ уже записан. Оставьте поле замены пустым, чтобы сохранить его, введите новый ключ для замены или отметьте «Удалить сохранённый ключ», чтобы явно удалить его."
+
+msgid "Will upgrading change my existing URLs?"
+msgstr "Изменятся ли существующие URL после обновления?"
+
+msgid "There is no bulk conversion or database migration of existing slugs. The plugin converts text only when WordPress asks it to generate a slug for saving. Back up your site and check your normal publishing workflow before upgrading."
+msgstr "Массовое преобразование или миграция существующих адресов не выполняются. Плагин преобразует текст, только когда WordPress запрашивает создание адреса для сохранения. Перед обновлением сделайте резервную копию сайта и проверьте свой обычный процесс публикации."
+
+msgid "Can I use this together with another slug transliteration plugin?"
+msgstr "Можно ли использовать плагин вместе с другим плагином транслитерации адресов?"
+
+msgid "Use only one slug conversion plugin at a time to avoid conflicting filters."
+msgstr "Используйте только один плагин преобразования адресов, чтобы избежать конфликтующих фильтров."
+
+msgid "Is the ISO mode a full implementation of ISO 9?"
+msgstr "Является ли режим ISO полной реализацией ISO 9?"
+
+msgid "It retains the historical ASCII table from this plugin for URL compatibility; it is not a complete implementation of the ISO 9 standard."
+msgstr "В нём сохранена историческая ASCII-таблица этого плагина для совместимости URL; это не полная реализация стандарта ISO 9."
+
+msgid "Why does the legacy folder identifier remain visible?"
+msgstr "Почему прежний идентификатор каталога по-прежнему виден?"
+
+msgid "Its stored value is preserved during upgrades. Yandex Cloud API keys use their service account's folder, so the legacy identifier is not sent in API-key requests."
+msgstr "Его значение сохраняется при обновлении. API-ключи Yandex Cloud используют каталог своего сервисного аккаунта, поэтому прежний идентификатор не отправляется в запросах с API-ключом."
+
+msgid "Local transliteration settings with conversion-mode cards and a sample address. No API key or external account is required."
+msgstr "Настройки локальной транслитерации с карточками режимов и примером адреса. API-ключ и внешняя учётная запись не требуются."
+
+msgid "Optional Yandex Cloud connection with saved-key status, a blank replacement field and fallback transliteration."
+msgstr "Необязательное подключение Yandex Cloud: статус сохранённого ключа, пустое поле замены и подстраховка транслитерацией."
+
+msgid "Legacy Yandex Translate API 1.5 settings and the preserved folder identifier in the compatibility section."
+msgstr "Настройки старого Yandex Translate API 1.5 и сохранённый идентификатор каталога в разделе совместимости."
+
+msgid "1.9.1"
+msgstr "1.9.1"
+
+msgid "Use English source strings and bundle a complete Russian translation, including compiled translations for immediate use."
+msgstr "Английские исходные строки и полный русский перевод, включая скомпилированный каталог для немедленного использования."
+
+msgid "Respect the administrator's WordPress language and let WordPress load translations on demand, with installed language packs taking priority."
+msgstr "Учёт языка администратора WordPress и загрузка переводов средствами WordPress по мере необходимости; установленные языковые пакеты имеют приоритет."
+
+msgid "Keep the Russian sample title, existing settings, saved API keys and slug conversion tables unchanged."
+msgstr "Русский пример названия, существующие настройки, сохранённые API-ключи и таблицы преобразования адресов остаются прежними."
+
+msgid "Test real WordPress locale switching, translated JavaScript labels and translation files in the installation package."
+msgstr "Проверка переключения языков WordPress, переводимых подписей JavaScript и файлов перевода в установочном пакете."
+
+msgid "1.9.0"
+msgstr "1.9.0"
+
+msgid "Redesign the settings screen with accessible mode cards, conditional Yandex settings, a local permalink example and a responsive layout."
+msgstr "Новая страница настроек с доступными карточками режимов, условным отображением настроек Яндекса, локальным примером адреса и адаптивной вёрсткой."
+
+msgid "Stop exposing saved API keys in HTML; support blank-field preservation, validated replacement and explicit deletion."
+msgstr "Сохранённые API-ключи больше не раскрываются в HTML; добавлены сохранение ключа при пустом поле, проверка замены и явное удаление."
+
+msgid "Keep legacy settings in a collapsible section and load screen assets only on the plugin settings page."
+msgstr "Старые настройки перенесены в раскрывающийся раздел; стили и скрипты загружаются только на странице настроек плагина."
+
+msgid "Include the settings template and runtime CSS/JavaScript in installation packages."
+msgstr "Шаблон страницы настроек, CSS и JavaScript включены в установочные пакеты."
+
+msgid "1.8.3"
+msgstr "1.8.3"
+
+msgid "Avoid repeated translation requests after a service failure within the same PHP request, while retaining successful cached responses."
+msgstr "Устранены повторные запросы перевода после сбоя сервиса в пределах одного PHP-запроса с сохранением успешных кешированных ответов."
+
+msgid "Prevent recursive translation calls triggered by third-party HTTP hooks."
+msgstr "Предотвращены рекурсивные запросы перевода, вызываемые сторонними HTTP-хуками."
+
+msgid "Check the 10,000-character input limit before sending a translation request."
+msgstr "Перед отправкой запроса перевода проверяется ограничение в 10 000 символов."
+
+msgid "Add regressions for outages, HTTP-hook reentry, input length and API-key changes; keep the existing slug tables and fallback setting."
+msgstr "Добавлены проверки сбоев, повторного входа через HTTP-хуки, длины текста и замены API-ключа; исходные таблицы и настройка подстраховки сохранены."
+
+msgid "1.8.2"
+msgstr "1.8.2"
+
+msgid "Set the minimum supported versions to WordPress 7.1 and PHP 8.4."
+msgstr "Минимальные поддерживаемые версии установлены на WordPress 7.1 и PHP 8.4."
+
+msgid "Align the plugin header, readme and automated compatibility matrix with these requirements; keep PHP 8.5 coverage."
+msgstr "Заголовок плагина, readme и автоматическая матрица совместимости приведены к этим требованиям; проверка PHP 8.5 сохранена."
+
+msgid "1.8.1"
+msgstr "1.8.1"
+
+msgid "Confirm compatibility with WordPress 7.1.3, including block-editor REST draft previews, publishing, autosaves, pages, categories and explicit slugs."
+msgstr "Подтверждена совместимость с WordPress 7.1.3: REST-предпросмотр черновиков в редакторе блоков, публикация, автосохранение, страницы, рубрики и явно заданные адреса."
+
+msgid "Add reproducible integration and authenticated settings-security tests, with automated WordPress/PHP compatibility checks."
+msgstr "Добавлены воспроизводимые интеграционные проверки и HTTP-проверки безопасности настроек с авторизацией, а также автоматические проверки совместимости WordPress/PHP."
+
+msgid "Keep API keys outside the REST settings endpoint and verify fallback publishing when the translation service is unavailable."
+msgstr "API-ключи исключены из REST-эндпоинта настроек; проверена публикация с подстраховкой при недоступности переводчика."
+
+msgid "Preserve the existing transliteration tables, settings and publishing behavior."
+msgstr "Сохранены исходные таблицы транслитерации, настройки и поведение при публикации."
+
+msgid "1.8.0"
+msgstr "1.8.0"
+
+msgid "Security: replace direct settings writes with the WordPress Settings API, capability checks and nonce protection; validate inputs and escape output. Addresses the CSRF/stored XSS issue reported as CVE-2025-39416."
+msgstr "Безопасность: прямое сохранение настроек заменено на Settings API WordPress с проверками прав и nonce; добавлены проверка входных данных и экранирование вывода. Устранена проблема CSRF/сохранённого XSS, описанная в CVE-2025-39416."
+
+msgid "Preserve the plugin entry file, original option names and transliteration tables."
+msgstr "Сохранены основной файл плагина, исходные имена настроек и таблицы транслитерации."
+
+msgid "Use the WordPress HTTP API with timeouts, redirect protection and validation of translation responses."
+msgstr "Сетевые запросы переведены на HTTP API WordPress с таймаутами, защитой от перенаправлений и проверкой ответов переводчика."
+
+msgid "Correct Yandex Cloud service-account request parameters and the legacy API status check."
+msgstr "Исправлены параметры запросов сервисного аккаунта Yandex Cloud и проверка статуса старого API."
+
+msgid "Avoid external translation in query contexts and for already Latin slugs."
+msgstr "Исключён внешний перевод при поисковых запросах и для адресов, уже записанных латиницей."
+
+msgid "Make fallback behavior consistent when credentials are missing or translation fails."
+msgstr "Поведение подстраховки приведено к единым правилам при отсутствии ключа или ошибке перевода."
+
+msgid "Prefix plugin symbols and remove the hard dependency on mbstring."
+msgstr "Символы плагина получили префикс; обязательная зависимость от mbstring устранена."
+
+msgid "Update metadata and document optional external services and privacy implications."
+msgstr "Обновлены метаданные и документация о необязательных внешних сервисах и конфиденциальности."
+
+msgid "1.7"
+msgstr "1.7"
+
+msgid "Historical changelog: PHP 8 compatibility adjustment. The old package still declared version 1.6."
+msgstr "Историческое изменение: исправление совместимости с PHP 8. Старый пакет по-прежнему объявлял версию 1.6."
+
+msgid "1.6"
+msgstr "1.6"
+
+msgid "Reworked the code and added Yandex Cloud."
+msgstr "Переработан код и добавлен Yandex Cloud."
+
+msgid "1.5b"
+msgstr "1.5b"
+
+msgid "Bug fixes."
+msgstr "Исправлены ошибки."
+
+msgid "1.4b"
+msgstr "1.4b"
+
+msgid "Added WordPress 5 support."
+msgstr "Добавлена поддержка WordPress 5."
+
+msgid "Adds complete bundled Russian translations and an English interface. WordPress uses your selected language. Existing settings, API keys and URLs are retained."
+msgstr "Добавлены полный встроенный русский перевод и английский интерфейс. WordPress использует выбранный вами язык. Существующие настройки, API-ключи и URL сохраняются."
+
+msgid "New settings page. Direct updates from 1.6 retain existing options. A blank API-key field keeps the saved key; use the explicit deletion checkbox to remove it. WordPress 7.1+ and PHP 8.4+ are required."
+msgstr "Новая страница настроек. Прямое обновление с 1.6 сохраняет существующие параметры. Пустое поле API-ключа сохраняет прежний ключ; для его удаления есть отдельная галочка. Требуются WordPress 7.1+ и PHP 8.4+."
+
+msgid "Reduces repeated waits when translation is unavailable and prevents nested translation calls. WordPress 7.1+ and PHP 8.4+ remain required."
+msgstr "Сокращены повторные ожидания при недоступности перевода и предотвращены вложенные запросы перевода. По-прежнему требуются WordPress 7.1+ и PHP 8.4+."
+
+msgid "This release requires WordPress 7.1 or later and PHP 8.4 or later. PHP 8.5 is also supported."
+msgstr "Этот выпуск требует WordPress 7.1 или новее и PHP 8.4 или новее. PHP 8.5 также поддерживается."
+
+msgid "WordPress 7.1 compatibility verification with automated editor and settings-security regression coverage. Existing settings and slug conversion behavior are retained."
+msgstr "Проверка совместимости с WordPress 7.1, включая автоматические регрессионные проверки редактора и безопасности настроек. Существующие настройки и поведение преобразования адресов сохранены."
+
+msgid "Security update addressing CSRF and stored XSS in settings. Existing option names and transliteration tables are retained. Check your selected translation mode and fallback setting after updating."
+msgstr "Обновление безопасности устраняет CSRF и сохранённый XSS в настройках. Исходные имена настроек и таблицы транслитерации сохранены. После обновления проверьте выбранный режим перевода и настройку подстраховки."

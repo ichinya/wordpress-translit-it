@@ -1,0 +1,254 @@
+# # Russian translation of translit it!
+# # License: GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: translit it! 1.9.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/translit-it\n"
+"Last-Translator: Ichi-nya\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-28T04:23:19+00:00\n"
+"PO-Revision-Date: 2026-10-28 12:00+0500\n"
+"X-Generator: WordPress POMO / WP-CLI\n"
+"X-Domain: translit-it\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+#. Plugin Name of the plugin
+#: index.php
+msgid "translit it!"
+msgstr "Транслитерируй это!"
+
+#. Plugin URI of the plugin
+#: index.php
+msgid "https://wordpress.org/plugins/translit-it/"
+msgstr "https://wordpress.org/plugins/translit-it/"
+
+#. Description of the plugin
+#: index.php
+msgid "Transliterates Russian slugs or translates them into English with Yandex Translate."
+msgstr "Транслитерирует русские адреса или переводит их на английский с помощью Яндекс Переводчика."
+
+#. Author of the plugin
+#: index.php
+msgid "Ichi-nya"
+msgstr "Ichi-nya"
+
+#. Author URI of the plugin
+#: index.php
+msgid "https://profiles.wordpress.org/ichi-nya/"
+msgstr "https://profiles.wordpress.org/ichi-nya/"
+
+#: includes/settings-page.php:13
+msgid "Transliteration"
+msgstr "Транслитерация"
+
+#: includes/settings-page.php:14 includes/settings-page.php:21
+msgid "Local"
+msgstr "Локально"
+
+#: includes/settings-page.php:15
+msgid "Replaces Russian letters with Latin characters. Works without an API key or external services."
+msgstr "Заменяет русские буквы латинскими. Работает без ключа и подключения к сервисам."
+
+#: includes/settings-page.php:17 includes/settings-page.php:24
+msgid "Processed on your site. No text is sent to an external service."
+msgstr "Обработка на вашем сайте. Текст никуда не отправляется."
+
+#: includes/settings-page.php:20
+msgid "ISO-style transliteration"
+msgstr "Транслитерация ISO"
+
+#: includes/settings-page.php:22
+msgid "The historical ISO-style table: ё → yo, ж → zh. Choose this if you prefer these spellings."
+msgstr "Прежняя таблица ISO: ё → yo, ж → zh. Подойдёт, если вы привыкли к такому написанию."
+
+#: includes/settings-page.php:27
+msgid "Translate with Yandex"
+msgstr "Перевод через Яндекс"
+
+#: includes/settings-page.php:29
+msgid "Translates the title into English. Requires a Yandex Cloud API key."
+msgstr "Переводит название на английский. Понадобится API-ключ Yandex Cloud."
+
+#: includes/settings-page.php:30 includes/settings-page.php:43
+msgid "The translation is generated when the post is saved"
+msgstr "Перевод появится при сохранении записи"
+
+#: includes/settings-page.php:31
+msgid "The title is sent to Yandex. This preview does not make paid requests."
+msgstr "Название отправляется в Яндекс. Предпросмотр не выполняет платных запросов."
+
+#: includes/settings-page.php:34
+msgid "No conversion"
+msgstr "Без преобразования"
+
+#: includes/settings-page.php:35
+msgid "Off"
+msgstr "Выключено"
+
+#: includes/settings-page.php:36
+msgid "Lets WordPress generate addresses using its standard behavior."
+msgstr "Оставляет создание адресов стандартным средствам WordPress."
+
+#: includes/settings-page.php:38
+msgid "The plugin does not change the generated address."
+msgstr "Плагин не участвует в создании адреса."
+
+#: includes/settings-page.php:44
+msgid "Uses the legacy Yandex service. Its availability is not guaranteed."
+msgstr "Используется устаревший сервис Яндекса. Его доступность не гарантируется."
+
+#: includes/settings-page.php:51
+msgid "Slug transliteration"
+msgstr "Транслитерация адресов"
+
+#: includes/settings-page.php:52
+msgid "Readable addresses for new posts, pages and categories."
+msgstr "Понятные адреса для новых записей, страниц и рубрик."
+
+#: includes/settings-page.php:60
+msgid "How to generate addresses"
+msgstr "Как создавать адреса"
+
+#: includes/settings-page.php:61
+msgid "Choose how to convert titles into addresses."
+msgstr "Выберите подходящий способ преобразования названия."
+
+#: includes/settings-page.php:74
+msgid "Compatibility with legacy settings"
+msgstr "Совместимость со старыми настройками"
+
+#: includes/settings-page.php:76
+msgid "For an existing legacy connection. Choose Yandex Cloud for a new connection."
+msgstr "Для уже настроенного старого подключения. Для нового подключения выберите Yandex Cloud."
+
+#: includes/settings-page.php:77
+msgid "Legacy folder identifier"
+msgstr "Прежний идентификатор каталога"
+
+#: includes/settings-page.php:79
+msgid "Kept for compatibility. A Yandex Cloud service-account API key does not require this identifier."
+msgstr "Сохранён для совместимости. Для API-ключа сервисного аккаунта Yandex Cloud этот идентификатор не требуется."
+
+#: includes/settings-page.php:85
+msgid "Yandex connection"
+msgstr "Подключение к Яндексу"
+
+#: includes/settings-page.php:85
+msgid "Key saved"
+msgstr "Ключ сохранён"
+
+#: includes/settings-page.php:85
+msgid "No key configured"
+msgstr "Ключ не задан"
+
+#: includes/settings-page.php:86
+msgid "Yandex Cloud requires a service-account API key with the ai.translate.user role."
+msgstr "Для Yandex Cloud нужен API-ключ сервисного аккаунта с ролью ai.translate.user."
+
+#: includes/settings-page.php:86
+msgid "How to get an API key"
+msgstr "Как получить ключ"
+
+#: includes/settings-page.php:86
+msgid " (opens in a new tab)"
+msgstr " (откроется в новой вкладке)"
+
+#: includes/settings-page.php:87
+msgid "For legacy API 1.5, use its original registration key. A Yandex Cloud key cannot be used in this mode."
+msgstr "Для старого API 1.5 используйте выданный ему регистрационный ключ. Ключ Yandex Cloud для этого режима не подходит."
+
+#: includes/settings-page.php:88
+msgid "Replace API key"
+msgstr "Заменить API-ключ"
+
+#: includes/settings-page.php:88
+msgid "API key"
+msgstr "API-ключ"
+
+#: includes/settings-page.php:90
+msgid "Leave blank to keep the saved key"
+msgstr "Оставьте пустым, чтобы сохранить прежний ключ"
+
+#: includes/settings-page.php:90
+msgid "Paste your API key"
+msgstr "Вставьте API-ключ"
+
+#: includes/settings-page.php:91
+msgid "Show"
+msgstr "Показать"
+
+#: includes/settings-page.php:91
+msgid "Hide"
+msgstr "Скрыть"
+
+#: includes/settings-page.php:93
+msgid "The saved key is never shown again. To replace it, enter a new key and save the settings."
+msgstr "Сохранённый ключ не показывается повторно. Чтобы заменить его, введите новый и сохраните настройки."
+
+#: includes/settings-page.php:95
+msgid "Delete the saved key"
+msgstr "Удалить сохранённый ключ"
+
+#: includes/settings-page.php:98
+msgid "Use transliteration as a fallback"
+msgstr "Подстраховать перевод транслитерацией"
+
+#: includes/settings-page.php:99
+msgid "If Yandex is unavailable, the address is generated locally. Non-Latin characters in the response are also converted."
+msgstr "Если Яндекс не отвечает, адрес будет создан локально. Нелатинские символы в ответе тоже будут преобразованы."
+
+#: includes/settings-page.php:101
+msgid "Translation sends titles to Yandex, including draft titles. Service charges may apply."
+msgstr "При переводе названия отправляются в Яндекс, в том числе названия черновиков. Использование сервиса может быть платным."
+
+#: includes/settings-page.php:104
+msgid "Save settings"
+msgstr "Сохранить настройки"
+
+#: includes/settings-page.php:105
+msgid "You have unsaved changes"
+msgstr "Есть несохранённые изменения"
+
+#: includes/settings-page.php:105
+msgid "Changes take effect after saving."
+msgstr "Изменения применятся после сохранения."
+
+#: includes/settings-page.php:109
+msgid "Example and guidance"
+msgstr "Пример и подсказки"
+
+#: includes/settings-page.php:111
+msgid "Address example"
+msgstr "Пример адреса"
+
+#: includes/settings-page.php:112
+msgid "Post title"
+msgstr "Название записи"
+
+#: includes/settings-page.php:119
+msgid "What will change"
+msgstr "Что изменится"
+
+#: includes/settings-page.php:120
+msgid "This setting applies when generating new addresses. Existing links are not automatically rewritten."
+msgstr "Настройка применяется при создании новых адресов. Существующие ссылки автоматически не переписываются."
+
+#: includes/settings-page.php:121
+msgid "Use one slug conversion plugin at a time to avoid conflicts."
+msgstr "Используйте один плагин преобразования адресов, чтобы избежать конфликтов."
+
+#: index.php:101
+msgid "The API key could not be saved. Check the copied value. The previous key has been kept."
+msgstr "Не удалось сохранить API-ключ. Проверьте скопированное значение. Прежний ключ сохранён."
+
+#: index.php:196
+msgid "Translit it!"
+msgstr "Транслитерируй это!"
+
+#: index.php:211
+msgid "You do not have permission to access the plugin settings."
+msgstr "У вас нет доступа к настройкам плагина."

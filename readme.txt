@@ -5,7 +5,7 @@ Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 7.1
 Tested up to: 7.1
 Requires PHP: 8.4
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ Local transliteration does not require an API key, does not send data to any ext
 
 The plugin does not run a bulk rewrite of existing permalinks. WordPress still handles slug cleanup and uniqueness. Explicitly changing or regenerating a slug can change its URL, as usual.
 
-Settings are available under Settings > Транслитерируй это!.
+Settings are available under Settings > Translit it! (Настройки > Транслитерируй это! in Russian).
 
 The settings screen includes conversion-mode cards, a local slug example and a separate Yandex connection section. Saved API keys are never sent back to the page: leave the replacement field blank to keep your key, or explicitly select its deletion. Legacy options remain available in a collapsible section. The form also works without JavaScript.
 
@@ -44,16 +44,22 @@ After the first failed response from a translation mode and API key, further unc
 
 1. Install translit it! from the WordPress.org plugin directory, or upload the translit-it folder to /wp-content/plugins/.
 2. Activate translit it!.
-3. Open Settings > Транслитерируй это! and choose a conversion mode.
+3. Open Settings > Translit it! and choose a conversion mode.
 4. For local transliteration, no external account is needed. For Yandex Cloud, configure your service-account API key.
 
 == Frequently Asked Questions ==
+
+= Is the plugin available in Russian? =
+
+Yes. Version 1.9.1 includes a complete Russian interface translation and English source strings. WordPress uses the administrator's selected language; choose Russian in your WordPress user profile or site language settings. The Russian sample title stays unchanged so the transliteration example remains useful in either language.
+
+The bundled Russian translation works immediately, without waiting for an official WordPress.org language pack. The translation notice on WordPress.org is controlled separately by the review and approval of translations on translate.wordpress.org.
 
 = How do I update from version 1.6? =
 
 First make sure your site runs WordPress 7.1 or later and PHP 8.4 or later, and back up your files and database. Open Plugins > Installed Plugins and use Update now for translit it!. You do not need to uninstall the old version.
 
-The selected conversion mode, fallback checkbox, API key and legacy folder identifier are retained. Open Settings > Транслитерируй это! after updating to check them. Leave the API-key replacement field blank to keep the saved key.
+The selected conversion mode, fallback checkbox, API key and legacy folder identifier are retained. Open Settings > Translit it! after updating to check them. Leave the API-key replacement field blank to keep the saved key.
 
 Direct updates from 1.6 to 1.9.0 were checked through the WordPress admin on WordPress 7.1.3 / PHP 8.4 with MySQL 8.4 and, separately, SQLite. The checks covered Yandex Cloud with fallback enabled and legacy Yandex API 1.5 with fallback disabled, including saving the new form without re-entering the key. Stored options and existing post, page and category slugs were preserved. These checks used fictional keys and did not verify live Yandex translation.
 
@@ -84,6 +90,12 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 3. Legacy Yandex Translate API 1.5 settings and the preserved folder identifier in the compatibility section.
 
 == Changelog ==
+
+= 1.9.1 =
+* Use English source strings and bundle a complete Russian translation, including compiled translations for immediate use.
+* Respect the administrator's WordPress language and let WordPress load translations on demand, with installed language packs taking priority.
+* Keep the Russian sample title, existing settings, saved API keys and slug conversion tables unchanged.
+* Test real WordPress locale switching, translated JavaScript labels and translation files in the installation package.
 
 = 1.9.0 =
 * Redesign the settings screen with accessible mode cards, conditional Yandex settings, a local permalink example and a responsive layout.
@@ -130,6 +142,9 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 * Added WordPress 5 support.
 
 == Upgrade Notice ==
+
+= 1.9.1 =
+Adds complete bundled Russian translations and an English interface. WordPress uses your selected language. Existing settings, API keys and URLs are retained.
 
 = 1.9.0 =
 New settings page. Direct updates from 1.6 retain existing options. A blank API-key field keeps the saved key; use the explicit deletion checkbox to remove it. WordPress 7.1+ and PHP 8.4+ are required.

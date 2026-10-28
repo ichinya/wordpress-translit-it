@@ -3,7 +3,7 @@
  * Plugin Name: translit it!
  * Plugin URI: https://wordpress.org/plugins/translit-it/
  * Description: Transliterates Russian slugs or translates them into English with Yandex Translate.
- * Version: 1.9.0
+ * Version: 1.9.1
  * Requires at least: 7.1
  * Requires PHP: 8.4
  * Author: Ichi-nya
@@ -11,6 +11,7 @@
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: translit-it
+ * Domain Path: /languages
  *
  * @package Translit_It
  */
@@ -24,7 +25,7 @@ require_once __DIR__ . '/includes/transliteration.php';
 /** Slug conversion and the settings page. */
 final class Translit_It {
 	/** Asset version for the settings screen. */
-	private const VERSION = '1.9.0';
+	private const VERSION = '1.9.1';
 
 	/** Hook returned by WordPress for this plugin's settings screen. */
 	private static string $settings_page = '';
@@ -39,10 +40,19 @@ final class Translit_It {
 
 	/** Register hooks. */
 	public static function boot() {
+		add_filter( 'lang_dir_for_domain', array( __CLASS__, 'bundled_translation_path' ), 10, 3 );
 		add_filter( 'sanitize_title', array( __CLASS__, 'filter_title' ), 0, 3 );
 		add_action( 'admin_menu', array( __CLASS__, 'add_menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_settings_assets' ) );
+	}
+
+	/** Let core load translations on demand, preferring installed language packs. */
+	public static function bundled_translation_path( $path, $domain, $locale ) {
+		if ( ! $path && 'translit-it' === $domain && 'ru_RU' === $locale ) {
+			return __DIR__ . '/languages/';
+		}
+		return $path;
 	}
 
 	/** Register the original option names so existing settings survive upgrades. */
@@ -88,7 +98,7 @@ final class Translit_It {
 		}
 		$validated = self::sanitize_key( $entered );
 		if ( '' === $validated ) {
-			add_settings_error( 'translit_it_settings', 'invalid_api_key', __( 'Не удалось сохранить API-ключ. Проверьте скопированное значение. Прежний ключ сохранён.', 'translit-it' ) );
+			add_settings_error( 'translit_it_settings', 'invalid_api_key', __( 'The API key could not be saved. Check the copied value. The previous key has been kept.', 'translit-it' ) );
 			return $current;
 		}
 		return $validated;
@@ -183,7 +193,7 @@ final class Translit_It {
 
 	/** Preserve the old settings URL and require administrative capabilities. */
 	public static function add_menu() {
-		self::$settings_page = (string) add_options_page( __( 'Транслитерируй это!', 'translit-it' ), __( 'Транслитерируй это!', 'translit-it' ), 'manage_options', 'translit-it/index.php', array( __CLASS__, 'render_settings' ) );
+		self::$settings_page = (string) add_options_page( __( 'Translit it!', 'translit-it' ), __( 'Translit it!', 'translit-it' ), 'manage_options', 'translit-it/index.php', array( __CLASS__, 'render_settings' ) );
 	}
 
 	/** Load the screen's CSS and JavaScript only on this settings page. */
@@ -198,7 +208,7 @@ final class Translit_It {
 	/** Render escaped settings; options.php handles authorization and CSRF. */
 	public static function render_settings() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'У вас нет доступа к настройкам плагина.', 'translit-it' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to access the plugin settings.', 'translit-it' ), '', array( 'response' => 403 ) );
 		}
 		$mode   = self::sanitize_mode( get_option( 'rtl_standard', 'off' ) );
 		$has_key = '' !== self::sanitize_key( get_option( 'ya_api_key', '' ) );

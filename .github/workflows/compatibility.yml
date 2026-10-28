@@ -61,6 +61,7 @@ jobs:
           wp config set DISABLE_WP_CRON true --raw --path="$WP_ROOT"
           wp config set AUTOMATIC_UPDATER_DISABLED true --raw --path="$WP_ROOT"
           wp core install --path="$WP_ROOT" --url=http://127.0.0.1:18947 --title='translit it compatibility tests' --admin_user=translit_test_admin --admin_password=fixture-only-isolated-admin-20261024 --admin_email=tests@example.invalid --skip-email
+          wp language core install ru_RU --path="$WP_ROOT"
           wp plugin install "$RUNNER_TEMP/translit-it.zip" --activate --path="$WP_ROOT"
           wp user create translit_test_subscriber subscriber@example.invalid --role=subscriber --user_pass=fixture-only-isolated-admin-20261024 --path="$WP_ROOT"
       - name: Install Plugin Check

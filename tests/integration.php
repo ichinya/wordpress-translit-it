@@ -193,4 +193,5 @@ wp_delete_post( $page, true );
 wp_delete_term( $term['term_id'], 'category' );
 require __DIR__ . '/rest.php';
 require __DIR__ . '/translation-failures.php';
+require __DIR__ . '/localization.php';
 echo 'PASS: ' . $GLOBALS['translit_test_checks'] . ' WordPress integration checks on ' . get_bloginfo( 'version' ) . ' / PHP ' . PHP_VERSION . PHP_EOL;

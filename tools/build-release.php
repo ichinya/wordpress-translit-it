@@ -14,7 +14,7 @@ if ( ! is_dir( dirname( $output ) ) && ! mkdir( dirname( $output ), 0775, true )
     throw new RuntimeException( 'Cannot create the output directory.' );
 }
 $files = array( 'index.php', 'readme.txt', 'LICENSE.txt' );
-foreach ( array( 'includes', 'assets' ) as $directory ) {
+foreach ( array( 'includes', 'assets', 'languages' ) as $directory ) {
     $iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $root . '/' . $directory, FilesystemIterator::SKIP_DOTS ) );
     foreach ( $iterator as $file ) {
         if ( $file->isFile() ) {
