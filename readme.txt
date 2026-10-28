@@ -3,7 +3,7 @@ Contributors: Ichi-nya
 Donate link: https://sobe.ru/na/translit_it
 Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 7.1
-Tested up to: 7.1.3
+Tested up to: 7.1
 Requires PHP: 8.4
 Stable tag: 1.9.0
 License: GPLv2 or later
@@ -42,12 +42,24 @@ After the first failed response from a translation mode and API key, further unc
 
 == Installation ==
 
-1. Upload the translit-it folder to /wp-content/plugins/ or install the plugin from WordPress.org when available.
+1. Install translit it! from the WordPress.org plugin directory, or upload the translit-it folder to /wp-content/plugins/.
 2. Activate translit it!.
 3. Open Settings > Транслитерируй это! and choose a conversion mode.
 4. For local transliteration, no external account is needed. For Yandex Cloud, configure your service-account API key.
 
 == Frequently Asked Questions ==
+
+= How do I update from version 1.6? =
+
+First make sure your site runs WordPress 7.1 or later and PHP 8.4 or later, and back up your files and database. Open Plugins > Installed Plugins and use Update now for translit it!. You do not need to uninstall the old version.
+
+The selected conversion mode, fallback checkbox, API key and legacy folder identifier are retained. Open Settings > Транслитерируй это! after updating to check them. Leave the API-key replacement field blank to keep the saved key.
+
+Direct updates from 1.6 to 1.9.0 were checked through the WordPress admin on WordPress 7.1.3 / PHP 8.4 with MySQL 8.4 and, separately, SQLite. The checks covered Yandex Cloud with fallback enabled and legacy Yandex API 1.5 with fallback disabled, including saving the new form without re-entering the key. Stored options and existing post, page and category slugs were preserved. These checks used fictional keys and did not verify live Yandex translation.
+
+= Why is the API-key field empty after updating? =
+
+This is intentional: the saved key is not returned to the browser. The "Ключ сохранён" status means a valid key is already stored. Leave the replacement field blank to keep it, enter a new key to replace it, or select "Удалить сохранённый ключ" to remove it explicitly.
 
 = Will upgrading change my existing URLs? =
 
@@ -64,6 +76,12 @@ It retains the historical ASCII table from this plugin for URL compatibility; it
 = Why does the legacy folder identifier remain visible? =
 
 Its stored value is preserved during upgrades. Yandex Cloud API keys use their service account's folder, so the legacy identifier is not sent in API-key requests.
+
+== Screenshots ==
+
+1. Local transliteration settings with conversion-mode cards and a sample address. No API key or external account is required.
+2. Optional Yandex Cloud connection with saved-key status, a blank replacement field and fallback transliteration.
+3. Legacy Yandex Translate API 1.5 settings and the preserved folder identifier in the compatibility section.
 
 == Changelog ==
 
@@ -114,7 +132,7 @@ Its stored value is preserved during upgrades. Yandex Cloud API keys use their s
 == Upgrade Notice ==
 
 = 1.9.0 =
-New settings page. Existing options are retained. A blank API-key field now keeps the saved key; use the explicit deletion checkbox to remove it.
+New settings page. Direct updates from 1.6 retain existing options. A blank API-key field keeps the saved key; use the explicit deletion checkbox to remove it. WordPress 7.1+ and PHP 8.4+ are required.
 
 = 1.8.3 =
 Reduces repeated waits when translation is unavailable and prevents nested translation calls. WordPress 7.1+ and PHP 8.4+ remain required.
