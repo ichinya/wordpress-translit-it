@@ -1,6 +1,6 @@
 === translit it! ===
 Contributors: Ichi-nya
-Donate link: https://sobe.ru/na/translit_it
+Donate link: https://dalink.to/ichi_nya
 Tags: transliteration, slugs, russian, translation, permalinks
 Requires at least: 7.1
 Tested up to: 7.1
@@ -24,6 +24,10 @@ The plugin does not run a bulk rewrite of existing permalinks. WordPress still h
 Settings are available under Settings > Translit it! (Настройки > Транслитерируй это! in Russian).
 
 The settings screen includes conversion-mode cards, a local slug example and a separate Yandex connection section. Saved API keys are never sent back to the page: leave the replacement field blank to keep your key, or explicitly select its deletion. Legacy options remain available in a collapsible section. The form also works without JavaScript.
+
+= Support development =
+
+Support development via DaLink: https://dalink.to/ichi_nya or DonationAlerts: https://www.donationalerts.com/r/ichi_nya .
 
 = Minimum requirements =
 

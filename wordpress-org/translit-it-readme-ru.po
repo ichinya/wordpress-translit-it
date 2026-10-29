@@ -266,5 +266,11 @@ msgstr "Этот выпуск требует WordPress 7.1 или новее и 
 msgid "WordPress 7.1 compatibility verification with automated editor and settings-security regression coverage. Existing settings and slug conversion behavior are retained."
 msgstr "Проверка совместимости с WordPress 7.1, включая автоматические регрессионные проверки редактора и безопасности настроек. Существующие настройки и поведение преобразования адресов сохранены."
 
+msgid "Support development"
+msgstr "Поддержать разработку"
+
+msgid "Support development via DaLink: https://dalink.to/ichi_nya or DonationAlerts: https://www.donationalerts.com/r/ichi_nya ."
+msgstr "Поддержать разработку можно через DaLink: https://dalink.to/ichi_nya или DonationAlerts: https://www.donationalerts.com/r/ichi_nya ."
+
 msgid "Security update addressing CSRF and stored XSS in settings. Existing option names and transliteration tables are retained. Check your selected translation mode and fallback setting after updating."
 msgstr "Обновление безопасности устраняет CSRF и сохранённый XSS в настройках. Исходные имена настроек и таблицы транслитерации сохранены. После обновления проверьте выбранный режим перевода и настройку подстраховки."
